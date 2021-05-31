@@ -1,0 +1,14 @@
+.root {
+-fx-background-color: cadetblue; //Цвет заднего фона окна
+}
+.label {
+-fx-font-size: 16; //Высота текста
+}
+.button {
+-fx-font-size: 12;
+-fx-text-fill: black;
+}
+.button:focused {
+ -fx-background-color: chartreuse;
+ -fx-text-fill: green;
+}
