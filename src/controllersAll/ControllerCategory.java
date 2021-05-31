@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import mains.MessageWindow;
+import mains.Validation;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -36,10 +37,20 @@ public class ControllerCategory {
         textDiscount.setText(String.valueOf(workItem.getDiscount()));
     }
 
-    public boolean validation() {
-        if (textName.getText() != "" && textAddedValue.getText() != "" && textDiscount.getText() != "")
-            return true;
-        return false;
+    private boolean validation(String process){
+        if (textName.getText().equals("") || textName.getText().length() > 45) {
+            MessageWindow.showError(process, "Неверно введено Наименование, либо больше 45 символов");
+            return false;
+        }
+        if (Validation.checkContainNotDouble(textAddedValue.getText())) {
+            MessageWindow.showError(process, "Неверно введена Добавочная стоимость. Допустимы только числа");
+            return false;
+        }
+        if (Validation.checkContainNotDouble(textDiscount.getText())) {
+            MessageWindow.showError(process, "Неверно введена Скидка. Допустимы только числа");
+            return false;
+        }
+        return true;
     }
 
     public void setWorkItem(){
@@ -49,11 +60,11 @@ public class ControllerCategory {
     }
 
     public void onAdd(ActionEvent actionEvent) {
-        if (validation()) {
+        if (validation("Добавление")) {
             try {
                 workItem = new Category();
                 setWorkItem();
-                if (SQLRequests.addCategory(conn, workItem) > 0) {
+                if (SQLRequests.addOneRow(conn, workItem) > 0) {
                     MessageWindow.showInformation("Добавление", "Добавлена 1 запись");
                     dialogStage.close();
                 }
@@ -61,16 +72,13 @@ public class ControllerCategory {
                 throwables.printStackTrace();
             }
         }
-        else {
-            MessageWindow.showError("Добавление", "Неверно введены данные");
-        }
     }
 
     public void onEdit(ActionEvent actionEvent) {
-        if (validation() && workItem.getId() >0) {
+        if (validation("Изменение") && workItem.getId() >0) {
             try {
                 setWorkItem();
-                if (SQLRequests.editCategory(conn, workItem) > 0) {
+                if (SQLRequests.editOneRow(conn, workItem) > 0) {
                     MessageWindow.showInformation("Изменение", "Изменена 1 запись");
                     dialogStage.close();
                 }
@@ -78,17 +86,18 @@ public class ControllerCategory {
                 throwables.printStackTrace();
             }
         }
-        else {
-            MessageWindow.showError("Изменение", "Неверно введены данные");
-        }
     }
 
     public void onDelete(ActionEvent actionEvent) {
-        if (workItem.getId() >0) {
+        if (workItem.getId() > 0) {
             try {
-                if (SQLRequests.deleteOneRow(conn, DbHandler.TABLE_NAME_CATEGORY, workItem.getId()) > 0) {
-                    MessageWindow.showInformation("Удаление", "Удалена 1 запись");
-                    dialogStage.close();
+                if (!SQLRequests.selectReferences(conn, workItem).isBeforeFirst()) {
+                    if (SQLRequests.deleteOneRow(conn, DbHandler.TABLE_NAME_CATEGORY, workItem.getId()) > 0) {
+                        MessageWindow.showInformation("Удаление", "Удалена 1 запись");
+                        dialogStage.close();
+                    }
+                } else {
+                    MessageWindow.showError("Удаление", "Невозможно удалить запись,так как на нее ссылаются в других таблицах");
                 }
             } catch (SQLException throwables) {
                 throwables.printStackTrace();

@@ -34,10 +34,12 @@ public class ControllerDirection {
         textName.setText(workItem.getName());
     }
 
-    public boolean validation() {
-        if (textName.getText() != "")
-            return true;
-        return false;
+    public boolean validation(String process){
+        if (textName.getText().equals("") || textName.getText().length() > 45) {
+            MessageWindow.showError(process, "Неверно введено Наименование, либо больше 45 символов");
+            return false;
+        }
+        return true;
     }
 
     public void setWorkItem(){
@@ -45,11 +47,11 @@ public class ControllerDirection {
     }
 
     public void onAdd(ActionEvent actionEvent) {
-        if (validation()) {
+        if (validation("Добавление")) {
             try {
                 workItem = new Direction();
                 setWorkItem();
-                if (SQLRequests.addDirection(conn, workItem) > 0) {
+                if (SQLRequests.addOneRow(conn, workItem) > 0) {
                     MessageWindow.showInformation("Добавление", "Добавлена 1 запись");
                     dialogStage.close();
                 }
@@ -57,16 +59,13 @@ public class ControllerDirection {
                 throwables.printStackTrace();
             }
         }
-        else {
-            MessageWindow.showError("Добавление", "Неверно введены данные");
-        }
     }
 
     public void onEdit(ActionEvent actionEvent) {
-        if (validation() && workItem.getId() >0) {
+        if (validation("Изменение") && workItem.getId() >0) {
             try {
                 setWorkItem();
-                if (SQLRequests.editDirection(conn, workItem) > 0) {
+                if (SQLRequests.editOneRow(conn, workItem) > 0) {
                     MessageWindow.showInformation("Изменение", "Изменена 1 запись");
                     dialogStage.close();
                 }
@@ -82,9 +81,13 @@ public class ControllerDirection {
     public void onDelete(ActionEvent actionEvent) {
         if (workItem.getId() >0) {
             try {
-                if (SQLRequests.deleteOneRow(conn, DbHandler.TABLE_NAME_DIRECTION, workItem.getId()) > 0) {
-                    MessageWindow.showInformation("Удаление", "Удалена 1 запись");
-                    dialogStage.close();
+                if(!SQLRequests.selectReferences(conn, workItem).isBeforeFirst()) {
+                    if (SQLRequests.deleteOneRow(conn, DbHandler.TABLE_NAME_DIRECTION, workItem.getId()) > 0) {
+                        MessageWindow.showInformation("Удаление", "Удалена 1 запись");
+                        dialogStage.close();
+                    }
+                }else {
+                    MessageWindow.showError("Удаление", "Невозможно удалить запись,так как на нее ссылаются в других таблицах");
                 }
             } catch (SQLException throwables) {
                 throwables.printStackTrace();

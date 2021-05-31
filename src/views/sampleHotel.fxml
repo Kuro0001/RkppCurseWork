@@ -14,7 +14,7 @@
    <children>
       <SplitPane dividerPositions="0.29797979797979796" prefHeight="313.0" prefWidth="361.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+          <AnchorPane maxWidth="200.0" minHeight="0.0" minWidth="100.0" prefHeight="160.0" prefWidth="100.0">
                <children>
                   <VBox alignment="CENTER" prefHeight="209.0" prefWidth="295.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
@@ -31,22 +31,22 @@
                         <Label text="Адрес" />
                         <TextField fx:id="textAddress" />
                         <Label text="Направление" />
-                        <Label fx:id="labelDirection" text="наименоание направления">
+                        <Label fx:id="labelDirection" text="наименование направления">
                            <VBox.margin>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </VBox.margin>
                         </Label>
-                        <Button mnemonicParsing="false" onAction="#onAdd" text="Добавить">
+                        <Button maxWidth="200.0" minWidth="100.0" mnemonicParsing="false" onAction="#onAdd" text="Добавить">
                            <VBox.margin>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </VBox.margin>
                         </Button>
-                        <Button mnemonicParsing="false" onAction="#onEdit" text="Редактировоать">
+                        <Button maxWidth="200.0" minWidth="100.0" mnemonicParsing="false" onAction="#onEdit" text="Редактировоать">
                            <VBox.margin>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </VBox.margin>
                         </Button>
-                        <Button mnemonicParsing="false" onAction="#onDelete" text="Удалить">
+                        <Button maxWidth="200.0" minWidth="100.0" mnemonicParsing="false" onAction="#onDelete" text="Удалить">
                            <VBox.margin>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </VBox.margin>
@@ -61,7 +61,7 @@
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
                   <TextField AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0" />
-                  <Button layoutX="162.0" layoutY="5.0" mnemonicParsing="false" text="Найти" AnchorPane.leftAnchor="162.0" AnchorPane.topAnchor="5.0" />
+                  <Button layoutX="162.0" layoutY="5.0" mnemonicParsing="false" onAction="#onSerchDirection" text="Найти" AnchorPane.leftAnchor="162.0" AnchorPane.topAnchor="5.0" />
                   <TableView fx:id="tableDirections" onMouseClicked="#onDirectionClick" prefHeight="464.0" prefWidth="237.6" AnchorPane.bottomAnchor="-0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0">
                      <columns>
                         <TableColumn fx:id="columnDirectionsName" prefWidth="75.0" text="Наименование направления" />

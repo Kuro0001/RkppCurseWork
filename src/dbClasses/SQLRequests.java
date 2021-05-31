@@ -1,8 +1,6 @@
 package dbClasses;
 
-import dbClasses.tables.Category;
-import dbClasses.tables.Direction;
-import dbClasses.tables.Kind;
+import dbClasses.tables.*;
 import org.jetbrains.annotations.Nullable;
 
 import java.sql.Connection;
@@ -12,7 +10,6 @@ import java.time.LocalDate;
 
 public class SQLRequests {
 
-    @Nullable
     public static ResultSet selectCalculateResult(Connection conn, String date1, String date2) throws SQLException {
         String query = "SELECT employee.id, employee.name, employee.surname, employee.patronymic, " +
                 "COUNT(tourist.id_tourist) AS count, SUM(voucher.cost) As sum " +
@@ -22,62 +19,104 @@ public class SQLRequests {
         ResultSet set = conn.createStatement().executeQuery(query);
         return set;
     }
-    @Nullable
     public static ResultSet selectOneRow(Connection conn, String tableName, int id) throws SQLException {
         String query = "SELECT * FROM " + DbHandler.DB_NAME + "." + tableName + " WHERE ID=" + id;
         ResultSet set = conn.createStatement().executeQuery(query);
         return set;
     }
+    public static ResultSet selectSearch(Connection conn, Tour tour) throws SQLException {
+        String query = "SELECT tour.id, tour.name, tour.tour_operator, tour.offers_count, tour.vouchers_count, tour.hotel, " +
+                "tour.price, tour.date_start, tour.days_count, tour.kind, tour.category FROM tour, kind, hotel " +
+                "WHERE hotel.id in (SELECT id FROM hotel WHERE direction in (SELECT id FROM direction WHERE name LIKE " + tour.getDirection() + ")) " +
+                "AND kind.id in (SELECT id FROM kind WHERE name LIKE " + tour.getKind() + ") " +
+                "AND tour.price < " + tour.getPrice() + " AND kind.id = tour.kind  AND hotel.id = tour.hotel";
+        ResultSet set = conn.createStatement().executeQuery(query);
+        return set;
+    }
+    public static ResultSet selectSearch(Connection conn, Client client) throws SQLException {
+        String query = "SELECT * FROM CLIENT " +
+                " WHERE surname LIKE " + client.getSurname() + " AND pasport LIKE " + client.getPassport();
+        ResultSet set = conn.createStatement().executeQuery(query);
+        return set;
+    }
+
+
     public static int deleteOneRow(Connection conn, String tableName, int id) throws SQLException {
         String query = "DELETE FROM " + DbHandler.DB_NAME + "." + tableName + " WHERE ID=" + id;
         int rowsCount = conn.createStatement().executeUpdate(query);
         return rowsCount;
     }
-    @Nullable
     public static ResultSet selectAllInTable(Connection conn, String tableName) throws SQLException {
-        String query = "SELECT * FROM " + DbHandler.DB_NAME + "." + tableName;
+        String query = "SELECT * FROM " + DbHandler.DB_NAME + "." + tableName + " LIMIT 0, 100";
         ResultSet set = conn.createStatement().executeQuery(query);
         return set;
     }
 
-    public static int addKind(Connection conn, Kind kind) throws SQLException {
+    public static ResultSet selectReferences(Connection conn, Kind kind) throws SQLException {
+        String query = "SELECT * FROM " + DbHandler.DB_NAME + ".TOUR" + " WHERE KIND=" + kind.getId();
+        ResultSet set = conn.createStatement().executeQuery(query);
+        return set;
+    }
+    public static ResultSet selectReferences(Connection conn, Category category) throws SQLException {
+        String query = "SELECT * FROM " + DbHandler.DB_NAME + ".TOUR" + " WHERE CATEGORY=" + category.getId();
+        ResultSet set = conn.createStatement().executeQuery(query);
+        return set;
+    }
+    public static ResultSet selectReferences(Connection conn, Direction direction) throws SQLException {
+        String query = "SELECT * FROM " + DbHandler.DB_NAME + ".HOTEL" + " WHERE DIRECTION=" + direction.getId();
+        ResultSet set = conn.createStatement().executeQuery(query);
+        return set;
+    }
+
+
+    public static int addOneRow(Connection conn, Kind kind) throws SQLException {
         String query = "INSERT  " + DbHandler.DB_NAME + ".kind(name) VALUES (\'"+ kind.getName() +"\')";
         int count = conn.createStatement().executeUpdate(query);
         return count;
     }
-    public static int editKind(Connection conn, Kind kind) throws SQLException {
-        String query = "UPDATE " + DbHandler.DB_NAME + ".kind SET NAME = \'" + kind.getName() + "\' WHERE ID=" + kind.getId();
-        int set = conn.createStatement().executeUpdate(query);
-        return set;
-    }
-
-    public static int addCategory(Connection conn, Category category) throws SQLException {
+    public static int addOneRow(Connection conn, Category category) throws SQLException {
         String query = "INSERT  " + DbHandler.DB_NAME + ".category(name, added_value, discount) " +
                 "VALUES (\'"+ category.getName() +"\', \'" + category.getAddedValue() +"\', \'" + category.getDiscount() +"\')";
         int count = conn.createStatement().executeUpdate(query);
         return count;
     }
-    public static int editCategory(Connection conn, Category category) throws SQLException {
+    public static int addOneRow(Connection conn, Direction direction) throws SQLException {
+        String query = "INSERT  " + DbHandler.DB_NAME + ".DIRECTION(name) " +
+                "VALUES (\'"+ direction.getName() +"\')";
+        int count = conn.createStatement().executeUpdate(query);
+        return count;
+    }
+    public static int addOneRow(Connection conn, Hotel hotel) throws SQLException {
+        String query = "INSERT  " + DbHandler.DB_NAME + ".HOTEL(name, address, direction) " +
+                "VALUES (\'"+ hotel.getName() +"\', \'" + hotel.getAddress() + "\', " + hotel.getIdDirection() + ")";
+        int count = conn.createStatement().executeUpdate(query);
+        return count;
+    }
+
+    public static int editOneRow(Connection conn, Kind kind) throws SQLException {
+        String query = "UPDATE " + DbHandler.DB_NAME + ".kind SET NAME = \'" + kind.getName() + "\' WHERE ID=" + kind.getId();
+        int set = conn.createStatement().executeUpdate(query);
+        return set;
+    }
+    public static int editOneRow(Connection conn, Category category) throws SQLException {
         String query = "UPDATE " + DbHandler.DB_NAME + ".category SET " +
                 "NAME = \'" + category.getName() + "\', ADDED_VALUE=\'" +category.getAddedValue()+"\', DISCOUNT=\'" + category.getDiscount() +"\'" +
                 "WHERE ID=" + category.getId();
         int set = conn.createStatement().executeUpdate(query);
         return set;
     }
-
-    public static int addDirection(Connection conn, Direction direction) throws SQLException {
-        String query = "INSERT  " + DbHandler.DB_NAME + ".DIRECTION(name) " +
-                "VALUES (\'"+ direction.getName() +"\')";
-        int count = conn.createStatement().executeUpdate(query);
-        return count;
-    }
-    public static int editDirection(Connection conn, Direction category) throws SQLException {
+    public static int editOneRow(Connection conn, Direction direction) throws SQLException {
         String query = "UPDATE " + DbHandler.DB_NAME + ".DIRECTION SET " +
-                "NAME = \'" + category.getName() + "\' WHERE ID=" + category.getId();
+                "NAME = \'" + direction.getName() + "\' WHERE ID=" + direction.getId();
         int set = conn.createStatement().executeUpdate(query);
         return set;
     }
-
+    public static int editOneRow(Connection conn, Hotel hotel) throws SQLException {
+        String query = "UPDATE " + DbHandler.DB_NAME + ".DIRECTION SET " +
+                "NAME = \'" + hotel.getName() + "\' WHERE ID=" + hotel.getId();
+        int set = conn.createStatement().executeUpdate(query);
+        return set;
+    }
     /*
     public static void EditEntryInHumanWithId(Connection conn, Human hmn) throws SQLException {
         String query = "UPDATE institut.HUMANS SET NAME = \'" + hmn.getName() + "\', SURNAME = \'" + hmn.getSurname() + "\', PATRONYMIC = \'" + hmn.getPatronymic() + "\', GENDER = \'" + hmn.getGender() + "\', HEIGHT = " + hmn.getHeight() + ", WEIGHT = " + hmn.getWeight() + ", AGE = " + hmn.getAge() + ", TELEPHONE = \'" + hmn.getTelephone() + "\' WHERE ID = " + hmn.getId();

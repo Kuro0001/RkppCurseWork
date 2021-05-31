@@ -25,6 +25,9 @@ public class Hotel {
     public Hotel() {
         this(0,"", "", 0,"");
     }
+    public Hotel(String name) {
+        this(0,name, "", 0,"");
+    }
 
     public int getId() { return id.get(); }
     public IntegerProperty idProperty() { return id; }

@@ -18,6 +18,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import mains.MessageWindow;
 import mains.Main;
+import mains.Validation;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -85,6 +86,11 @@ public class ControllerMainWindow {
     public TableColumn<Result, Double> columnResultSum;
     public DatePicker datePickerDateStartForResult;
     public DatePicker datePickerDateEndForResult;
+    public TextField textClientSurname;
+    public TextField textClientPassport;
+    public TextField textTourKind;
+    public TextField textTourPrice;
+    public TextField textTourDirection;
 
     private ObservableList<Kind> kinds = FXCollections.observableArrayList();
     private ObservableList<Category> categories = FXCollections.observableArrayList();
@@ -644,24 +650,24 @@ public class ControllerMainWindow {
     public void onHotelClick(MouseEvent mouseEvent) {
         if (mouseEvent.getClickCount() > 1) {
             try {
-                Direction selectedItem = tableDirections.getSelectionModel().getSelectedItem();
+                Hotel selectedItem = tableHotels.getSelectionModel().getSelectedItem();
                 if (selectedItem == null)
-                    selectedItem = new Direction("новая запись");
+                    selectedItem = new Hotel("новая запись");
                 FXMLLoader loader = new FXMLLoader();
-                loader.setLocation(Main.class.getResource("../views/sampleDirection.fxml"));
+                loader.setLocation(Main.class.getResource("../views/sampleHotel.fxml"));
                 Parent page = loader.load();
                 Stage addStage = new Stage();
-                addStage.setTitle("Работа с записью направления - " + selectedItem.getName());
+                addStage.setTitle("Работа с записью отеля - " + selectedItem.getName());
                 addStage.initModality(Modality.APPLICATION_MODAL);
                 addStage.initOwner(Main.getPrimaryStage());
                 Scene scene = new Scene(page);
                 addStage.setScene(scene);
-                ControllerDirection controller = loader.getController();
+                ControllerHotel controller = loader.getController();
                 controller.setDialogStage(addStage, selectedItem);
                 addStage.setMinWidth(300);
                 addStage.setMinWidth(150);
                 addStage.showAndWait();
-                fillTableDirections();
+                fillTableHotels();
                 labelLog.setText("Ожидание действий пользователя. Приятной работы.");
             } catch (IOException ex) {
                 MessageWindow.showError("Открытие окна", ex.getMessage());
@@ -687,6 +693,45 @@ public class ControllerMainWindow {
     }
 
 
+    public void onClientSearch(ActionEvent actionEvent) {
+        try {
+            Client item = new Client();
+            String surname = textClientSurname.getText();
+            String passport = textClientPassport.getText();
+            item.setSurname("\'%" + surname + "%\'");
+            if (Validation.checkContainNotInt(passport))
+                passport = "";
+            item.setPassport("\'%" + passport + "%\'");
+            ResultSet result = SQLRequests.selectSearch((conn), item);
+            if (result.isBeforeFirst())
+                fillTableClients(result);
+            else MessageWindow.showInformation("Поиск клиентов", "клиентов с фамилией содержащей (" +
+                    surname + ") и паспортом содержащим (" + passport + ") не найдено");
+            labelLog.setText("Ожидание действий пользователя. Приятной работы.");
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
 
-
+    public void onTourSearch(ActionEvent actionEvent) {
+        try {
+            Tour item = new Tour();
+            String direction = textTourDirection.getText();
+            String kind = textTourKind.getText();
+            String price = textTourPrice.getText();
+            item.setDirection("\'%" + direction + "%\'");
+            item.setKind("\'%" + kind + "%\'");
+            if (Validation.checkContainNotDouble(price))
+                price = String.valueOf(Integer.MAX_VALUE);
+            item.setPrice(Double.parseDouble(price));
+            ResultSet result = SQLRequests.selectSearch((conn), item);
+            if (result.isBeforeFirst())
+                fillTableTour(result);
+            else MessageWindow.showInformation("Поиск туров", "туров с направлением содержащим (" +
+                    direction + "), видом содержащим (" + kind + ") и ценой до (" + price + ") не найдено");
+            labelLog.setText("Ожидание действий пользователя. Приятной работы.");
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
 }

@@ -8,8 +8,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="200.0" prefWidth="290.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllersAll.ControllerDirection" stylesheets="/views/sample.css">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="200.0" prefWidth="290.0" stylesheets="/views/sample.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllersAll.ControllerDirection">
    <children>
       <VBox alignment="CENTER" layoutX="20.0" layoutY="20.0" prefHeight="209.0" prefWidth="295.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -30,17 +29,17 @@
       </VBox>
       <HBox alignment="CENTER" layoutX="20.0" layoutY="20.0" prefHeight="64.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
-            <Button mnemonicParsing="false" onAction="#onAdd" text="Добавить">
+            <Button alignment="CENTER" mnemonicParsing="false" onAction="#onAdd" text="Добавить">
                <HBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </HBox.margin>
             </Button>
-            <Button mnemonicParsing="false" onAction="#onEdit" text="Редактировоать">
+            <Button alignment="CENTER" mnemonicParsing="false" onAction="#onEdit" text="Редактировоать">
                <HBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </HBox.margin>
             </Button>
-            <Button mnemonicParsing="false" onAction="#onDelete" text="Удалить">
+            <Button alignment="CENTER" mnemonicParsing="false" onAction="#onDelete" text="Удалить">
                <HBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </HBox.margin>
