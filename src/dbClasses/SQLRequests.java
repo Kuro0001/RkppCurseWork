@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class SQLRequests {
 
@@ -29,7 +30,8 @@ public class SQLRequests {
                 "tour.price, tour.date_start, tour.days_count, tour.kind, tour.category FROM tour, kind, hotel " +
                 "WHERE hotel.id in (SELECT id FROM hotel WHERE direction in (SELECT id FROM direction WHERE name LIKE " + tour.getDirection() + ")) " +
                 "AND kind.id in (SELECT id FROM kind WHERE name LIKE " + tour.getKind() + ") " +
-                "AND tour.price < " + tour.getPrice() + " AND kind.id = tour.kind  AND hotel.id = tour.hotel";
+                "AND tour.price < " + tour.getPrice() + " AND kind.id = tour.kind  AND hotel.id = tour.hotel " +
+                "AND tour.date_start > DATE(" + tour.getDateStart().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")).replace("-", "") + ")";
         ResultSet set = conn.createStatement().executeQuery(query);
         return set;
     }
@@ -39,7 +41,38 @@ public class SQLRequests {
         ResultSet set = conn.createStatement().executeQuery(query);
         return set;
     }
-
+    public static ResultSet selectSearch(Connection conn, TourOperator tourOperator) throws SQLException {
+        String query = "SELECT * FROM TOUR_OPERATOR " +
+                " WHERE name LIKE " + tourOperator.getName() + " AND unique_number LIKE " + tourOperator.getUniqueNumber();
+        ResultSet set = conn.createStatement().executeQuery(query);
+        return set;
+    }
+    public static ResultSet selectSearch(Connection conn, Kind kind) throws SQLException {
+        String query = "SELECT * FROM KIND " +
+                " WHERE name LIKE " + kind.getName();
+        ResultSet set = conn.createStatement().executeQuery(query);
+        return set;
+    }
+    public static ResultSet selectSearch(Connection conn, Category category) throws SQLException {
+        String query = "SELECT * FROM CATEGORY " +
+                " WHERE name LIKE " + category.getName();
+        ResultSet set = conn.createStatement().executeQuery(query);
+        return set;
+    }
+    public static ResultSet selectSearch(Connection conn, Direction direction) throws SQLException {
+        String query = "SELECT * FROM DIRECTION " +
+                " WHERE name LIKE " + direction.getName();
+        ResultSet set = conn.createStatement().executeQuery(query);
+        return set;
+    }
+    public static ResultSet selectSearch(Connection conn, Hotel hotel) throws SQLException {
+        String query = "SELECT hotel.id, hotel.name, hotel.address, hotel.direction FROM HOTEL, DIRECTION " +
+                " WHERE hotel.name LIKE " + hotel.getName() +
+                " AND direction.id IN (SELECT id FROM DIRECTION WHERE name LIKE " + hotel.getDirection() + ") " +
+                "AND direction.id = hotel.direction";
+        ResultSet set = conn.createStatement().executeQuery(query);
+        return set;
+    }
 
     public static int deleteOneRow(Connection conn, String tableName, int id) throws SQLException {
         String query = "DELETE FROM " + DbHandler.DB_NAME + "." + tableName + " WHERE ID=" + id;
@@ -112,8 +145,9 @@ public class SQLRequests {
         return set;
     }
     public static int editOneRow(Connection conn, Hotel hotel) throws SQLException {
-        String query = "UPDATE " + DbHandler.DB_NAME + ".DIRECTION SET " +
-                "NAME = \'" + hotel.getName() + "\' WHERE ID=" + hotel.getId();
+        String query = "UPDATE " + DbHandler.DB_NAME + ".HOTEL SET " +
+                "NAME = \'" + hotel.getName() + "\', ADDRESS = \'" + hotel.getAddress() + "\', " +
+                "DIRECTION = \'" + hotel.getIdDirection() + "\' WHERE ID=" + hotel.getId();
         int set = conn.createStatement().executeUpdate(query);
         return set;
     }

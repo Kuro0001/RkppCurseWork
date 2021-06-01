@@ -27,6 +27,7 @@ public class ControllerHotel {
     public Label labelDirection;
     public TableView<Direction> tableDirections;
     public TableColumn<Direction, String> columnDirectionsName;
+    public TextField textHotelDirection;
 
     private Stage dialogStage;
     Connection conn;
@@ -87,11 +88,13 @@ public class ControllerHotel {
         return true;
     }
 
-    private void setWorkItem(){
+    private void setWorkItem() {
         workItem.setName(textName.getText());
         workItem.setAddress(textAddress.getText());
-        workItem.setIdDirection(tableDirections.getSelectionModel().getSelectedItem().getId());
-        workItem.setDirection(tableDirections.getSelectionModel().getSelectedItem().getName());
+        if (tableDirections.getSelectionModel().getSelectedItem() != null) {
+            workItem.setIdDirection(tableDirections.getSelectionModel().getSelectedItem().getId());
+            workItem.setDirection(tableDirections.getSelectionModel().getSelectedItem().getName());
+        }
         labelDirection.setText(workItem.getDirection());
     }
 
@@ -146,10 +149,17 @@ public class ControllerHotel {
     }
 
     public void onSerchDirection(ActionEvent actionEvent) {
-        /*try {
-            fillTableDirections(SQLRequests.selectAllInTable((conn), DbHandler.TABLE_NAME_DIRECTION));
+        try {
+            Direction item = new Direction();
+            String name = textHotelDirection.getText();
+            item.setName("\'%" + name + "%\'");
+            ResultSet result = SQLRequests.selectSearch((conn), item);
+            if (result.isBeforeFirst())
+                fillTableDirections(result);
+            else MessageWindow.showInformation("Поиск направлений туров", "направлений туров с наименованием содержащим (" +
+                    name + ") не найдено");
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-        }*/
+        }
     }
 }

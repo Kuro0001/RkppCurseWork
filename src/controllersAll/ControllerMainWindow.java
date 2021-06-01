@@ -91,6 +91,16 @@ public class ControllerMainWindow {
     public TextField textTourKind;
     public TextField textTourPrice;
     public TextField textTourDirection;
+    public DatePicker dateTourDate;
+    public TextField textTourOperatorName;
+    public TextField textTourOperatorUniqueNumber;
+    public TextField textKindName;
+    public TextField textCategoryName;
+    public TextField textDirectionName;
+    public TextField textHotelName;
+    public TextField textHotelDirection;
+
+
 
     private ObservableList<Kind> kinds = FXCollections.observableArrayList();
     private ObservableList<Category> categories = FXCollections.observableArrayList();
@@ -719,16 +729,104 @@ public class ControllerMainWindow {
             String direction = textTourDirection.getText();
             String kind = textTourKind.getText();
             String price = textTourPrice.getText();
+            LocalDate date = dateTourDate.getValue();
             item.setDirection("\'%" + direction + "%\'");
             item.setKind("\'%" + kind + "%\'");
             if (Validation.checkContainNotDouble(price))
                 price = String.valueOf(Integer.MAX_VALUE);
             item.setPrice(Double.parseDouble(price));
+            if(date == null || date.toString() == null || date.toString().equals("")) date = LocalDate.of(0001,01,01);
+            item.setDateStart(date);
             ResultSet result = SQLRequests.selectSearch((conn), item);
             if (result.isBeforeFirst())
                 fillTableTour(result);
             else MessageWindow.showInformation("Поиск туров", "туров с направлением содержащим (" +
-                    direction + "), видом содержащим (" + kind + ") и ценой до (" + price + ") не найдено");
+                    direction + "), видом содержащим (" + kind + "), ценой до (" + price + ") и датой от (" + date.toString() + ") не найдено");
+            labelLog.setText("Ожидание действий пользователя. Приятной работы.");
+            dateTourDate.setValue(null);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    public void onTourOperatorSearch(ActionEvent actionEvent) {
+        try {
+            TourOperator item = new TourOperator();
+            String name = textTourOperatorName.getText();
+            String uniqueNumber = textTourOperatorUniqueNumber.getText();
+            item.setName("\'%" + name + "%\'");
+            item.setUniqueNumber("\'%" + uniqueNumber + "%\'");
+            ResultSet result = SQLRequests.selectSearch((conn), item);
+            if (result.isBeforeFirst())
+                fillTableTourOperators(result);
+            else MessageWindow.showInformation("Поиск туровоператоров", "туровоператоров с наименованием компании содержащим (" +
+                    name + ") и уникальным номером содержащим (" + uniqueNumber + ") не найдено");
+            labelLog.setText("Ожидание действий пользователя. Приятной работы.");
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    public void onKindSearch(ActionEvent actionEvent) {
+        try {
+            Kind item = new Kind();
+            String name = textKindName.getText();
+            item.setName("\'%" + name + "%\'");
+            ResultSet result = SQLRequests.selectSearch((conn), item);
+            if (result.isBeforeFirst())
+                fillTableKinds(result);
+            else MessageWindow.showInformation("Поиск видов туров", "видров туров с наименованием содержащим (" +
+                    name + ") не найдено");
+            labelLog.setText("Ожидание действий пользователя. Приятной работы.");
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    public void onCategorySearch(ActionEvent actionEvent) {
+        try {
+            Category item = new Category();
+            String name = textCategoryName.getText();
+            item.setName("\'%" + name + "%\'");
+            ResultSet result = SQLRequests.selectSearch((conn), item);
+            if (result.isBeforeFirst())
+                fillTableCategories(result);
+            else MessageWindow.showInformation("Поиск категорий туров", "категорий туров с наименованием содержащим (" +
+                    name + ") не найдено");
+            labelLog.setText("Ожидание действий пользователя. Приятной работы.");
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    public void onDirectionSearch(ActionEvent actionEvent) {
+        try {
+            Direction item = new Direction();
+            String name = textDirectionName.getText();
+            item.setName("\'%" + name + "%\'");
+            ResultSet result = SQLRequests.selectSearch((conn), item);
+            if (result.isBeforeFirst())
+                fillTableDirections(result);
+            else MessageWindow.showInformation("Поиск направлений туров", "направлений туров с наименованием содержащим (" +
+                    name + ") не найдено");
+            labelLog.setText("Ожидание действий пользователя. Приятной работы.");
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    public void onHotelSearch(ActionEvent actionEvent) {
+        try {
+            Hotel item = new Hotel();
+            String name = textHotelName.getText();
+            String direction = textHotelDirection.getText();
+            item.setName("\'%" + name + "%\'");
+            item.setDirection("\'%" + direction + "%\'");
+            ResultSet result = SQLRequests.selectSearch((conn), item);
+            if (result.isBeforeFirst())
+                fillTableHotels(result);
+            else MessageWindow.showInformation("Поиск отелей", "отелей с наименованием содержащим (" +
+                    name + ") и направлением содержащим (" + direction + ") не найдено");
             labelLog.setText("Ожидание действий пользователя. Приятной работы.");
         } catch (SQLException throwables) {
             throwables.printStackTrace();
