@@ -105,7 +105,6 @@ public class SQLRequests {
         ResultSet set = conn.createStatement().executeQuery(query);
         return set;
     }
-
     public static ResultSet selectVouchersForTourists(Connection conn, int idTourist, Voucher voucher, Tour tour) throws SQLException {
         String query = "SELECT voucher.* FROM tour, voucher, tourist " +
                 "WHERE tour.id in (SELECT id FROM tour WHERE hotel in " +
@@ -116,7 +115,6 @@ public class SQLRequests {
         ResultSet set = conn.createStatement().executeQuery(query);
         return set;
     }
-
     public static ResultSet selectVouchersForEmployee(Connection conn, int idEmployee, Voucher voucher, Tour tour) throws SQLException {
         String query = "SELECT voucher.* FROM tour, voucher, tourist " +
                 "WHERE tour.id in (SELECT id FROM tour WHERE hotel in " +
@@ -127,6 +125,16 @@ public class SQLRequests {
         ResultSet set = conn.createStatement().executeQuery(query);
         return set;
     }
+    public static ResultSet selectTourForTourOperator(Connection conn, int idTourOperator,  Direction direction, Tour tour) throws SQLException {
+        String query = "SELECT tour.* FROM tour WHERE tour.tour_operator = " + idTourOperator +
+                " AND tour.hotel in ( SELECT id FROM hotel WHERE direction in " +
+                "(SELECT id FROM direction WHERE name LIKE \'%" +  direction.getName()+ "%\')) AND " +
+                "tour.kind LIKE \'%"+ tour.getKind() + "%\' AND " +
+                "tour.date_start > " + tour.getDateStart().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")).replace("-", "");
+        ResultSet set = conn.createStatement().executeQuery(query);
+        return set;
+    }
+
 
     public static int deleteOneRow(Connection conn, String tableName, int id) throws SQLException {
         String query = "DELETE FROM " + DbHandler.DB_NAME + "." + tableName + " WHERE ID=" + id;
@@ -174,7 +182,11 @@ public class SQLRequests {
         ResultSet set = conn.createStatement().executeQuery(query);
         return set;
     }
-
+    public static ResultSet selectReferences(Connection conn, TourOperator tourOperator) throws SQLException {
+        String query = "SELECT * FROM TOUR" + " WHERE tour_operator =" + tourOperator.getId();
+        ResultSet set = conn.createStatement().executeQuery(query);
+        return set;
+    }
 
 
 
@@ -217,7 +229,13 @@ public class SQLRequests {
         int count = conn.createStatement().executeUpdate(query);
         return count;
     }
-
+    public static int addOneRow(Connection conn, TourOperator tourOperator) throws SQLException {
+        String query = "INSERT TOUR_OPERATOR(name, email, phone, unique_number) " +
+                "VALUES (\'"+ tourOperator.getName() +"\', \'" + tourOperator.getEmail() + "\', " +
+                "\'" + tourOperator.getPhone() + "\', \'" + tourOperator.getUniqueNumber() + "\')";
+        int count = conn.createStatement().executeUpdate(query);
+        return count;
+    }
 
 
     public static int editOneRow(Connection conn, Kind kind) throws SQLException {
@@ -260,7 +278,13 @@ public class SQLRequests {
         int set = conn.createStatement().executeUpdate(query);
         return set;
     }
-
+    public static int editOneRow(Connection conn, TourOperator tourOperator) throws SQLException {
+        String query = "UPDATE TOUR_OPERATOR SET " +
+                "name = \'"+ tourOperator.getName() + "\', phone = \'" + tourOperator.getPhone() + "\', " +
+                "unique_number = \'" + tourOperator.getUniqueNumber() + "\', email = \'" + tourOperator.getEmail() + "\' WHERE ID=" + tourOperator.getId();
+        int set = conn.createStatement().executeUpdate(query);
+        return set;
+    }
 
 
     /*

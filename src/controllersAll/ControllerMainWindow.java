@@ -776,6 +776,32 @@ public class ControllerMainWindow {
     }
 
     public void onTourOperatorClick(MouseEvent mouseEvent) {
+        if (mouseEvent.getClickCount() > 1) {
+            try {
+                TourOperator selectedItem = tableTourOperators.getSelectionModel().getSelectedItem();
+                if (selectedItem == null)
+                    selectedItem = new TourOperator("новая запись");
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(Main.class.getResource("../views/sampleTourOperator.fxml"));
+                Parent page = loader.load();
+                Stage addStage = new Stage();
+                labelLog.setText("Работа с записью туроператора - " +  selectedItem.getName());
+                addStage.setTitle("Работа с записью туроператора - " + selectedItem.getName());
+                addStage.initModality(Modality.APPLICATION_MODAL);
+                addStage.initOwner(Main.getPrimaryStage());
+                Scene scene = new Scene(page);
+                addStage.setScene(scene);
+                ControllerTourOperator controller = loader.getController();
+                controller.setDialogStage(addStage, selectedItem);
+                addStage.setMinWidth(950);
+                addStage.setMinHeight(500);
+                addStage.showAndWait();
+                fillTableTourOperators();
+                labelLog.setText("Ожидание действий пользователя. Приятной работы.");
+            } catch (IOException ex) {
+                MessageWindow.showError("Открытие окна", ex.getMessage());
+            }
+        }
     }
 
     public void onEmployeeClick(MouseEvent mouseEvent) {

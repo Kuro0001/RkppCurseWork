@@ -209,7 +209,7 @@ public class ControllerClient {
             MessageWindow.showError(process, "Неверно введено Отчество, либо больше 45 символов");
             return false;
         }
-        if(Validation.checkContainNotInt(textPassport.getText())) {
+        if(Validation.checkContainNotInt(textPassport.getText()) || textPassport.getText().length() > 10) {
             MessageWindow.showError(process, "Неверно введены Серия и номер паспорта, либо больше 10 символов");
             return false;
         }

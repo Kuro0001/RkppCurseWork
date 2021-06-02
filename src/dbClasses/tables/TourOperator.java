@@ -27,6 +27,7 @@ public class TourOperator {
     }
 
     public TourOperator() { this(0,"", "", "",""); }
+    public TourOperator(String name) { this(0,name, "", "",""); }
 
     public int getId() { return id.get(); }
     public IntegerProperty idProperty() { return id; }
