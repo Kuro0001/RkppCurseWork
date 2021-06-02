@@ -130,9 +130,13 @@ public class ControllerHotel {
     public void onDelete(ActionEvent actionEvent) {
         if (workItem.getId() > 0) {
             try {
-                if (SQLRequests.deleteOneRow(conn, DbHandler.TABLE_NAME_HOTELS, workItem.getId()) > 0) {
-                    MessageWindow.showInformation("Удаление", "Удалена 1 запись");
-                    dialogStage.close();
+                if (!SQLRequests.selectReferences(conn, workItem).isBeforeFirst()) {
+                    if (SQLRequests.deleteOneRow(conn, DbHandler.TABLE_NAME_HOTELS, workItem.getId()) > 0) {
+                        MessageWindow.showInformation("Удаление", "Удалена 1 запись");
+                        dialogStage.close();
+                    }
+                } else {
+                    MessageWindow.showError("Удаление", "Невозможно удалить запись,так как на нее ссылаются в других таблицах");
                 }
             } catch (SQLException throwables) {
                 throwables.printStackTrace();

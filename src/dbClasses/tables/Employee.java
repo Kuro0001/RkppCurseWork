@@ -29,6 +29,7 @@ public class Employee {
     }
 
     public Employee() { this(0,"", "", "",""); }
+    public Employee(String surname) { this(0,"", surname, "",""); }
 
     public int getId() { return id.get(); }
     public IntegerProperty idProperty() { return id; }

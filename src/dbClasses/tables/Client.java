@@ -1,7 +1,6 @@
 package dbClasses.tables;
 
 import javafx.beans.property.*;
-import org.jetbrains.annotations.Nullable;
 
 import java.time.LocalDate;
 
@@ -9,7 +8,6 @@ public class Client {
     private IntegerProperty id;
     private StringProperty name;
     private StringProperty surname;
-    @Nullable
     private StringProperty patronymic;
     private StringProperty passport;
     private ObjectProperty<LocalDate> birthDate;
@@ -27,7 +25,7 @@ public class Client {
     public static final String FIELD_BIRTH_DATE = "birth_date";
     public static final String FIELD_EMAIL = "EMAIL";
 
-    public Client(int id, String name, String surname,@Nullable String patronymic, String passport, LocalDate birthDate, String sex, String phone, String email) {
+    public Client(int id, String name, String surname, String patronymic, String passport, LocalDate birthDate, String sex, String phone, String email) {
         this.id = new SimpleIntegerProperty(id);
         this.name = new SimpleStringProperty(name);
         this.surname = new SimpleStringProperty(surname);
@@ -40,6 +38,7 @@ public class Client {
     }
 
     public Client() { this(0,"", "", "","",LocalDate.MIN,"","",""); }
+    public Client(String surname) { this(0,"", surname, "","",LocalDate.MIN,"","",""); }
 
     public int getId() { return id.get(); }
     public IntegerProperty idProperty() { return id; }
@@ -53,9 +52,7 @@ public class Client {
     public StringProperty surnameNumberProperty() { return surname; }
     public void setSurname(String surname) {  this.surname.set(surname); }
 
-    @Nullable
     public String getPatronymic() { return patronymic.get(); }
-    @Nullable
     public StringProperty patronymicProperty() { return patronymic; }
     public void setPatronymic(String patronymic) { this.patronymic.set(patronymic);}
 

@@ -112,7 +112,7 @@
                                           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                        </HBox.margin>
                                     </TextField>
-                                    <Label maxWidth="150.0" minWidth="60.0" text="Дата после" />
+                                    <Label maxWidth="100.0" minWidth="30.0" text="Дата с" />
                                     <DatePicker fx:id="dateTourDate">
                                        <HBox.margin>
                                           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -357,27 +357,37 @@
                            <children>
                               <HBox AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>
-                                    <Label minWidth="90.0" text="Наименование">
+                                    <Label minWidth="100.0" text="Наименование тура">
                                        <HBox.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                          <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
                                        </HBox.margin>
                                     </Label>
-                                    <TextField fx:id="textHotelName1" maxWidth="150.0" minWidth="150.0">
+                                    <TextField fx:id="textVoucherName" maxWidth="150.0" minWidth="150.0">
                                        <HBox.margin>
                                           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                        </HBox.margin>
                                     </TextField>
                                     <Label minWidth="75.0" text="Направление">
                                        <HBox.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                          <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
                                        </HBox.margin>
                                     </Label>
-                                    <TextField fx:id="textHotelDirection1" maxWidth="150.0" minWidth="150.0">
+                                    <TextField fx:id="textVoucherDirection" maxWidth="150.0" minWidth="150.0">
                                        <HBox.margin>
                                           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                        </HBox.margin>
                                     </TextField>
-                                    <Button minWidth="125.0" mnemonicParsing="false" onAction="#onHotelSearch" text="Найти направления">
+                                    <Label minWidth="30.0" text="Дата с">
+                                       <HBox.margin>
+                                          <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                    <DatePicker fx:id="dateVoucherDate">
+                                       <HBox.margin>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </HBox.margin>
+                                    </DatePicker>
+                                    <Button minWidth="125.0" mnemonicParsing="false" onAction="#onVoucherSearch" text="Найти путевки">
                                        <HBox.margin>
                                           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                        </HBox.margin>
@@ -388,8 +398,8 @@
                                 <columns>
                                   <TableColumn fx:id="columnVoucherTour" prefWidth="75.0" text="наименование тура" />
                                     <TableColumn fx:id="columnVoucherTourDirection" prefWidth="75.0" text="направление тура" />
-                                    <TableColumn fx:id="columnVoucherClient" prefWidth="75.0" text="оформитель" />
-                                  <TableColumn fx:id="columnVoucherEmployee" prefWidth="75.0" text="заказчик" />
+                                    <TableColumn fx:id="columnVoucherClient" prefWidth="75.0" text="заказчик" />
+                                  <TableColumn fx:id="columnVoucherEmployee" prefWidth="75.0" text="оформитель" />
                                     <TableColumn fx:id="columnVoucherCost" prefWidth="75.0" text="стоимость" />
                                     <TableColumn fx:id="columnVoucherDate" prefWidth="75.0" text="дата оформления" />
                                 </columns>
@@ -404,7 +414,26 @@
                      <content>
                         <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0">
                            <children>
-                              <TableView fx:id="tableEmployee" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#onEmployeeClick" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
+                              <HBox AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <Label minWidth="50.0" text="Фамилия">
+                                       <HBox.margin>
+                                          <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                    <TextField fx:id="textEmployeeSurname" maxWidth="150.0" minWidth="150.0">
+                                       <HBox.margin>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </HBox.margin>
+                                    </TextField>
+                                    <Button minWidth="125.0" mnemonicParsing="false" onAction="#onEmployeeSearch" text="Найти сотрудников">
+                                       <HBox.margin>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </HBox.margin>
+                                    </Button>
+                                 </children>
+                              </HBox>
+                              <TableView fx:id="tableEmployee" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#onEmployeeClick" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0">
                                 <columns>
                                   <TableColumn fx:id="columnEmployeeSurname" prefWidth="75.0" text="фамилия" />
                                   <TableColumn fx:id="columnEmployeeName" prefWidth="75.0" text="имя" />
@@ -490,9 +519,9 @@
                     <menus>
                       <Menu mnemonicParsing="false" text="меню">
                         <items>
-                              <MenuItem mnemonicParsing="false" onAction="#menuOnRefreshTables" text="Обновить таблицы" />
-                              <MenuItem mnemonicParsing="false" onAction="#menuOnAccountEnter" text="Войти в личный кабинет" />
-                              <MenuItem mnemonicParsing="false" onAction="#menuOnExit" text="Выйти" />
+                              <MenuItem mnemonicParsing="false" onAction="#onMenuRefreshTables" text="Обновить таблицы" />
+                              <MenuItem mnemonicParsing="false" onAction="#onMenuAccountEnter" text="Войти в личный кабинет" />
+                              <MenuItem mnemonicParsing="false" onAction="#onMenuExit" text="Выйти" />
                         </items>
                       </Menu>
                     </menus>
@@ -526,6 +555,6 @@
       </BorderPane>
    </children>
    <padding>
-      <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
    </padding>
 </AnchorPane>

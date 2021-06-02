@@ -25,9 +25,15 @@ public class SQLRequests {
         ResultSet set = conn.createStatement().executeQuery(query);
         return set;
     }
+    public static ResultSet selectOneRow(Connection conn, Employee employee) throws SQLException {
+        String query = "SELECT * FROM " + DbHandler.DB_NAME + ".employee" + " WHERE surname = \'" + employee.getSurname() + "\'" +
+                " AND email = \'" + employee.getEmail() + "\'";
+        ResultSet set = conn.createStatement().executeQuery(query);
+        return set;
+    }
+
     public static ResultSet selectSearch(Connection conn, Tour tour) throws SQLException {
-        String query = "SELECT tour.id, tour.name, tour.tour_operator, tour.offers_count, tour.vouchers_count, tour.hotel, " +
-                "tour.price, tour.date_start, tour.days_count, tour.kind, tour.category FROM tour, kind, hotel " +
+        String query = "SELECT tour.* FROM tour, kind, hotel " +
                 "WHERE hotel.id in (SELECT id FROM hotel WHERE direction in (SELECT id FROM direction WHERE name LIKE " + tour.getDirection() + ")) " +
                 "AND kind.id in (SELECT id FROM kind WHERE name LIKE " + tour.getKind() + ") " +
                 "AND tour.price < " + tour.getPrice() + " AND kind.id = tour.kind  AND hotel.id = tour.hotel " +
@@ -73,6 +79,54 @@ public class SQLRequests {
         ResultSet set = conn.createStatement().executeQuery(query);
         return set;
     }
+    public static ResultSet selectSearch(Connection conn, Voucher voucher , Tour tour) throws SQLException {
+        String query = "SELECT voucher.* FROM tour, voucher " +
+                "WHERE tour.id in (SELECT id FROM tour WHERE hotel in " +
+                "(SELECT id FROM hotel WHERE direction in (SELECT id FROM direction WHERE name LIKE " + tour.getDirection() + "))) " +
+                "AND tour.name LIKE " + tour.getName() + " " +
+                "AND tour.id = voucher.tour AND voucher.date > " + voucher.getDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")).replace("-", "");
+        ResultSet set = conn.createStatement().executeQuery(query);
+        return set;
+    }
+    public static ResultSet selectSearch(Connection conn, Employee employee) throws SQLException {
+        String query = "SELECT * FROM EMPLOYEE " +
+                " WHERE surname LIKE " + employee.getSurname();
+        ResultSet set = conn.createStatement().executeQuery(query);
+        return set;
+    }
+
+    public static ResultSet selectVouchersForClient(Connection conn, int idClient, Voucher voucher, Tour tour) throws SQLException {
+        String query = "SELECT voucher.* FROM tour, voucher " +
+                "WHERE tour.id in (SELECT id FROM tour WHERE hotel in " +
+                "(SELECT id FROM hotel WHERE direction in (SELECT id FROM direction WHERE name LIKE " + tour.getDirection() + "))) " +
+                "AND tour.name LIKE " + tour.getName() + " " +
+                "AND tour.id = voucher.tour AND voucher.date > " + voucher.getDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")).replace("-", "") +
+                " AND voucher.client = " + idClient;
+        ResultSet set = conn.createStatement().executeQuery(query);
+        return set;
+    }
+
+    public static ResultSet selectVouchersForTourists(Connection conn, int idTourist, Voucher voucher, Tour tour) throws SQLException {
+        String query = "SELECT voucher.* FROM tour, voucher, tourist " +
+                "WHERE tour.id in (SELECT id FROM tour WHERE hotel in " +
+                "(SELECT id FROM hotel WHERE direction in (SELECT id FROM direction WHERE name LIKE " + tour.getDirection() + "))) " +
+                "AND tour.name LIKE " + tour.getName() + " " +
+                "AND tour.id = voucher.tour AND voucher.date > " + voucher.getDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")).replace("-", "") +
+                " AND tourist.ID_voucher = voucher.id AND tourist.ID_tourist = " + idTourist;
+        ResultSet set = conn.createStatement().executeQuery(query);
+        return set;
+    }
+
+    public static ResultSet selectVouchersForEmployee(Connection conn, int idEmployee, Voucher voucher, Tour tour) throws SQLException {
+        String query = "SELECT voucher.* FROM tour, voucher, tourist " +
+                "WHERE tour.id in (SELECT id FROM tour WHERE hotel in " +
+                "(SELECT id FROM hotel WHERE direction in (SELECT id FROM direction WHERE name LIKE " + tour.getDirection() + "))) " +
+                "AND tour.name LIKE " + tour.getName() + " " +
+                "AND tour.id = voucher.tour AND voucher.date > " + voucher.getDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")).replace("-", "") +
+                " AND tourist.ID_voucher = voucher.id AND voucher.employee = " + idEmployee;
+        ResultSet set = conn.createStatement().executeQuery(query);
+        return set;
+    }
 
     public static int deleteOneRow(Connection conn, String tableName, int id) throws SQLException {
         String query = "DELETE FROM " + DbHandler.DB_NAME + "." + tableName + " WHERE ID=" + id;
@@ -100,6 +154,29 @@ public class SQLRequests {
         ResultSet set = conn.createStatement().executeQuery(query);
         return set;
     }
+    public static ResultSet selectReferences(Connection conn, Hotel hotel) throws SQLException {
+        String query = "SELECT * FROM " + DbHandler.DB_NAME + ".TOUR" + " WHERE HOTEL=" + hotel.getId();
+        ResultSet set = conn.createStatement().executeQuery(query);
+        return set;
+    }
+    public static ResultSet selectReferences(Connection conn, Client client) throws SQLException {
+        String query = "SELECT * FROM voucher" + " WHERE client =" + client.getId();
+        ResultSet set = conn.createStatement().executeQuery(query);
+        if (!set.isBeforeFirst())
+        {
+            query = "SELECT * FROM tourist" + " WHERE id_tourist =" + client.getId();
+            set = conn.createStatement().executeQuery(query);
+        }
+        return set;
+    }
+    public static ResultSet selectReferences(Connection conn, Employee employee) throws SQLException {
+        String query = "SELECT * FROM voucher" + " WHERE employee =" + employee.getId();
+        ResultSet set = conn.createStatement().executeQuery(query);
+        return set;
+    }
+
+
+
 
 
     public static int addOneRow(Connection conn, Kind kind) throws SQLException {
@@ -125,6 +202,23 @@ public class SQLRequests {
         int count = conn.createStatement().executeUpdate(query);
         return count;
     }
+    public static int addOneRow(Connection conn, Client client) throws SQLException {
+        String query = "INSERT CLIENT(name, surname, patronymic, sex, birth_date, pasport, phone, email) " +
+                "VALUES (\'"+ client.getName() +"\', \'" + client.getSurname() + "\', \'" + client.getPatronymic() + "\', " +
+                "\'" + client.getSex() + "\', \'" + client.getBirthDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")).replace("-", "") + "\', " +
+                " \'" + client.getPassport() + "\', \'" + client.getPhone() + "\', \'" + client.getEmail() + "\')";
+        int count = conn.createStatement().executeUpdate(query);
+        return count;
+    }
+    public static int addOneRow(Connection conn, Employee employee) throws SQLException {
+        String query = "INSERT EMPLOYEE(name, surname, patronymic, email) " +
+                "VALUES (\'"+ employee.getName() +"\', \'" + employee.getSurname() + "\', " +
+                "\'" + employee.getPatronymic() + "\', \'" + employee.getEmail() + "\')";
+        int count = conn.createStatement().executeUpdate(query);
+        return count;
+    }
+
+
 
     public static int editOneRow(Connection conn, Kind kind) throws SQLException {
         String query = "UPDATE " + DbHandler.DB_NAME + ".kind SET NAME = \'" + kind.getName() + "\' WHERE ID=" + kind.getId();
@@ -151,6 +245,24 @@ public class SQLRequests {
         int set = conn.createStatement().executeUpdate(query);
         return set;
     }
+    public static int editOneRow(Connection conn, Client client) throws SQLException {
+        String query = "UPDATE CLIENT SET " +
+                "name = \'"+ client.getName() +"\', surname = \'" + client.getSurname() + "\', patronymic = \'" + client.getPatronymic() + "\', " +
+                " sex = \'" + client.getSex() + "\', birth_date = \'" + client.getBirthDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")).replace("-", "") + "\', " +
+                " pasport = " + client.getPassport() + ", phone = " + client.getPhone() + ", email = \'" + client.getEmail() + "\' WHERE ID=" + client.getId();
+        int set = conn.createStatement().executeUpdate(query);
+        return set;
+    }
+    public static int editOneRow(Connection conn, Employee employee) throws SQLException {
+        String query = "UPDATE EMPLOYEE SET " +
+                "name = \'"+ employee.getName() +"\', surname = \'" + employee.getSurname() + "\', patronymic = \'" + employee.getPatronymic() + "\', " +
+                " email = \'" + employee.getEmail() + "\' WHERE ID=" + employee.getId();
+        int set = conn.createStatement().executeUpdate(query);
+        return set;
+    }
+
+
+
     /*
     public static void EditEntryInHumanWithId(Connection conn, Human hmn) throws SQLException {
         String query = "UPDATE institut.HUMANS SET NAME = \'" + hmn.getName() + "\', SURNAME = \'" + hmn.getSurname() + "\', PATRONYMIC = \'" + hmn.getPatronymic() + "\', GENDER = \'" + hmn.getGender() + "\', HEIGHT = " + hmn.getHeight() + ", WEIGHT = " + hmn.getWeight() + ", AGE = " + hmn.getAge() + ", TELEPHONE = \'" + hmn.getTelephone() + "\' WHERE ID = " + hmn.getId();

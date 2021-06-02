@@ -1,5 +1,6 @@
 package controllersAll;
 
+import com.sun.glass.ui.Application;
 import dbClasses.DbHandler;
 import dbClasses.SQLRequests;
 import dbClasses.tables.*;
@@ -99,7 +100,10 @@ public class ControllerMainWindow {
     public TextField textDirectionName;
     public TextField textHotelName;
     public TextField textHotelDirection;
-
+    public TextField textVoucherName;
+    public TextField textVoucherDirection;
+    public DatePicker dateVoucherDate;
+    public TextField textEmployeeSurname;
 
 
     private ObservableList<Kind> kinds = FXCollections.observableArrayList();
@@ -112,12 +116,12 @@ public class ControllerMainWindow {
     private ObservableList<Tour> tours = FXCollections.observableArrayList();
     private ObservableList<Voucher> vouchers = FXCollections.observableArrayList();
     private ObservableList<Result> results = FXCollections.observableArrayList();
-    private Employee logedInUser = null;
     Connection conn;
     DbHandler dbHandler;
 
     @FXML
     void initialize() {
+        //authorisation();
         setTableKind();
         setTableCategories();
         setTableDirections();
@@ -143,13 +147,15 @@ public class ControllerMainWindow {
         });
         labelLog.setText("Ожидание действий пользователя. Приятной работы.");
     }
+
     private void fillTableKinds() {
         try {
-        fillTableKinds(SQLRequests.selectAllInTable((conn), DbHandler.TABLE_NAME_KIND));
+            fillTableKinds(SQLRequests.selectAllInTable((conn), DbHandler.TABLE_NAME_KIND));
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
     }
+
     private void fillTableKinds(ResultSet localResultSet) throws SQLException {
         tableKinds.getItems().clear();
         while (localResultSet.next()) {
@@ -175,13 +181,15 @@ public class ControllerMainWindow {
         });
         labelLog.setText("Ожидание действий пользователя. Приятной работы.");
     }
-    private void fillTableCategories(){
+
+    private void fillTableCategories() {
         try {
             fillTableCategories(SQLRequests.selectAllInTable((conn), DbHandler.TABLE_NAME_CATEGORY));
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
     }
+
     private void fillTableCategories(ResultSet localResultSet) throws SQLException {
         tableCategories.getItems().clear();
         while (localResultSet.next()) {
@@ -207,13 +215,15 @@ public class ControllerMainWindow {
         });
         labelLog.setText("Ожидание действий пользователя. Приятной работы.");
     }
-    private void fillTableDirections(){
+
+    private void fillTableDirections() {
         try {
             fillTableDirections(SQLRequests.selectAllInTable((conn), DbHandler.TABLE_NAME_DIRECTION));
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
     }
+
     private void fillTableDirections(ResultSet localResultSet) throws SQLException {
         tableDirections.getItems().clear();
         while (localResultSet.next()) {
@@ -239,13 +249,15 @@ public class ControllerMainWindow {
         });
         labelLog.setText("Ожидание действий пользователя. Приятной работы.");
     }
-    private void fillTableHotels(){
+
+    private void fillTableHotels() {
         try {
             fillTableHotels(SQLRequests.selectAllInTable((conn), DbHandler.TABLE_NAME_HOTELS));
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
     }
+
     private void fillTableHotels(ResultSet localResultSet) throws SQLException {
         tableHotels.getItems().clear();
         while (localResultSet.next()) {
@@ -278,13 +290,15 @@ public class ControllerMainWindow {
         });
         labelLog.setText("Ожидание действий пользователя. Приятной работы.");
     }
-    private void fillTableTourOperators(){
+
+    private void fillTableTourOperators() {
         try {
             fillTableTourOperators(SQLRequests.selectAllInTable((conn), DbHandler.TABLE_NAME_TOUR_OPERATOR));
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
     }
+
     private void fillTableTourOperators(ResultSet localResultSet) throws SQLException {
         tableTourOperators.getItems().clear();
         while (localResultSet.next()) {
@@ -314,13 +328,15 @@ public class ControllerMainWindow {
         });
         labelLog.setText("Ожидание действий пользователя. Приятной работы.");
     }
-    private void fillTableEmployees(){
+
+    private void fillTableEmployees() {
         try {
             fillTableEmployees(SQLRequests.selectAllInTable((conn), DbHandler.TABLE_NAME_EMPLOYEE));
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
     }
+
     private void fillTableEmployees(ResultSet localResultSet) throws SQLException {
         tableEmployee.getItems().clear();
         while (localResultSet.next()) {
@@ -354,13 +370,15 @@ public class ControllerMainWindow {
         });
         labelLog.setText("Ожидание действий пользователя. Приятной работы.");
     }
-    private void fillTableClients(){
+
+    private void fillTableClients() {
         try {
             fillTableClients(SQLRequests.selectAllInTable((conn), DbHandler.TABLE_NAME_CLIENT));
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
     }
+
     private void fillTableClients(ResultSet localResultSet) throws SQLException {
         tableClients.getItems().clear();
         while (localResultSet.next()) {
@@ -401,13 +419,15 @@ public class ControllerMainWindow {
         });
         labelLog.setText("Ожидание действий пользователя. Приятной работы.");
     }
-    private void fillTableTour(){
+
+    private void fillTableTour() {
         try {
             fillTableTour(SQLRequests.selectAllInTable((conn), DbHandler.TABLE_NAME_TOUR));
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
     }
+
     private void fillTableTour(ResultSet localResultSet) throws SQLException {
         tableTours.getItems().clear();
         while (localResultSet.next()) {
@@ -462,13 +482,15 @@ public class ControllerMainWindow {
         });
         labelLog.setText("Ожидание действий пользователя. Приятной работы.");
     }
-    private void fillTableVoucher(){
+
+    private void fillTableVoucher() {
         try {
             fillTableVoucher(SQLRequests.selectAllInTable((conn), DbHandler.TABLE_NAME_VOUCHER));
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
     }
+
     private void fillTableVoucher(ResultSet localResultSet) throws SQLException {
         tableVouchers.getItems().clear();
         while (localResultSet.next()) {
@@ -515,13 +537,15 @@ public class ControllerMainWindow {
         });
         labelLog.setText("Ожидание действий пользователя. Приятной работы.");
     }
-    private void fillTableResults(){
+
+    private void fillTableResults() {
         try {
             fillTableResults(SQLRequests.selectCalculateResult((conn), "20000101", "20000102"));
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
     }
+
     private void fillTableResults(ResultSet localResultSet) throws SQLException {
         tableResults.getItems().clear();
         while (localResultSet.next()) {
@@ -538,8 +562,36 @@ public class ControllerMainWindow {
         }
     }
 
+    private void authorisation() {
+        try {
+            labelLog.setText("Производится авторизация");
+            Main.setUser(new Employee());
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Main.class.getResource("../views/sampleAuthorisation.fxml"));
+            Parent page = loader.load();
+            Stage addStage = new Stage();
+            addStage.setTitle("Авторизация пользователя");
+            addStage.initModality(Modality.APPLICATION_MODAL);
+            addStage.initOwner(Main.getPrimaryStage());
+            Scene scene = new Scene(page);
+            addStage.setScene(scene);
+            ControllerAuthorisation controller = loader.getController();
+            controller.setDialogStage(addStage, Main.getUser());
+            addStage.setMinWidth(200);
+            addStage.setMinHeight(220);
+            addStage.showAndWait();
+            if (Main.getUser().getName() != "") {
+                labelAuthorization.setText("Пользователь: " + Main.getUser().getSurname() + " " + Main.getUser().getName());
+            }
+            else {
+                System. exit(0);
+            }
+        } catch (IOException ex) {
+            MessageWindow.showError("Авторизация", ex.getMessage());
+        }
+    }
 
-    public void menuOnRefreshTables(ActionEvent actionEvent) {
+    public void onMenuRefreshTables(ActionEvent actionEvent) {
         try {
             fillTableKinds(SQLRequests.selectAllInTable((conn), DbHandler.TABLE_NAME_KIND));
             fillTableCategories(SQLRequests.selectAllInTable((conn), DbHandler.TABLE_NAME_CATEGORY));
@@ -556,6 +608,15 @@ public class ControllerMainWindow {
         }
     }
 
+    public void onMenuAccountEnter(ActionEvent actionEvent) {
+        employeeAccountEnter(Main.getUser());
+    }
+
+    public void onMenuExit(ActionEvent actionEvent) {
+        Main.setUser(null);
+        authorisation();
+    }
+
     public void onResultCalculate(ActionEvent actionEvent) {
         try {
             String date1 = datePickerDateStartForResult.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")).replace("-", "");
@@ -565,12 +626,6 @@ public class ControllerMainWindow {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-    }
-
-    public void menuOnAccountEnter(ActionEvent actionEvent) {
-    }
-
-    public void menuOnExit(ActionEvent actionEvent) {
     }
 
     public void onKindClick(MouseEvent mouseEvent) {
@@ -583,6 +638,7 @@ public class ControllerMainWindow {
                 loader.setLocation(Main.class.getResource("../views/sampleKind.fxml"));
                 Parent page = loader.load();
                 Stage addStage = new Stage();
+                labelLog.setText("Работа с записью вида - " + selectedItem.getName());
                 addStage.setTitle("Работа с записью вида - " + selectedItem.getName());
                 addStage.initModality(Modality.APPLICATION_MODAL);
                 addStage.initOwner(Main.getPrimaryStage());
@@ -591,7 +647,7 @@ public class ControllerMainWindow {
                 ControllerKind controller = loader.getController();
                 controller.setDialogStage(addStage, selectedItem);
                 addStage.setMinWidth(300);
-                addStage.setMinWidth(150);
+                addStage.setMinHeight(150);
                 addStage.showAndWait();
                 fillTableKinds();
                 labelLog.setText("Ожидание действий пользователя. Приятной работы.");
@@ -611,6 +667,7 @@ public class ControllerMainWindow {
                 loader.setLocation(Main.class.getResource("../views/sampleCategory.fxml"));
                 Parent page = loader.load();
                 Stage addStage = new Stage();
+                labelLog.setText("Работа с записью категории - " + selectedItem.getName());
                 addStage.setTitle("Работа с записью категории - " + selectedItem.getName());
                 addStage.initModality(Modality.APPLICATION_MODAL);
                 addStage.initOwner(Main.getPrimaryStage());
@@ -619,7 +676,7 @@ public class ControllerMainWindow {
                 ControllerCategory controller = loader.getController();
                 controller.setDialogStage(addStage, selectedItem);
                 addStage.setMinWidth(300);
-                addStage.setMinWidth(150);
+                addStage.setMinHeight(150);
                 addStage.showAndWait();
                 fillTableCategories();
                 labelLog.setText("Ожидание действий пользователя. Приятной работы.");
@@ -639,6 +696,7 @@ public class ControllerMainWindow {
                 loader.setLocation(Main.class.getResource("../views/sampleDirection.fxml"));
                 Parent page = loader.load();
                 Stage addStage = new Stage();
+                labelLog.setText("Работа с записью направления - " + selectedItem.getName());
                 addStage.setTitle("Работа с записью направления - " + selectedItem.getName());
                 addStage.initModality(Modality.APPLICATION_MODAL);
                 addStage.initOwner(Main.getPrimaryStage());
@@ -647,7 +705,7 @@ public class ControllerMainWindow {
                 ControllerDirection controller = loader.getController();
                 controller.setDialogStage(addStage, selectedItem);
                 addStage.setMinWidth(300);
-                addStage.setMinWidth(150);
+                addStage.setMinHeight(150);
                 addStage.showAndWait();
                 fillTableDirections();
                 labelLog.setText("Ожидание действий пользователя. Приятной работы.");
@@ -667,6 +725,7 @@ public class ControllerMainWindow {
                 loader.setLocation(Main.class.getResource("../views/sampleHotel.fxml"));
                 Parent page = loader.load();
                 Stage addStage = new Stage();
+                labelLog.setText("Работа с записью отеля - " + selectedItem.getName());
                 addStage.setTitle("Работа с записью отеля - " + selectedItem.getName());
                 addStage.initModality(Modality.APPLICATION_MODAL);
                 addStage.initOwner(Main.getPrimaryStage());
@@ -675,7 +734,7 @@ public class ControllerMainWindow {
                 ControllerHotel controller = loader.getController();
                 controller.setDialogStage(addStage, selectedItem);
                 addStage.setMinWidth(300);
-                addStage.setMinWidth(150);
+                addStage.setMinHeight(150);
                 addStage.showAndWait();
                 fillTableHotels();
                 labelLog.setText("Ожидание действий пользователя. Приятной работы.");
@@ -688,9 +747,67 @@ public class ControllerMainWindow {
 
 
     public void onClientClick(MouseEvent mouseEvent) {
-
+        if (mouseEvent.getClickCount() > 1) {
+            try {
+                Client selectedItem = tableClients.getSelectionModel().getSelectedItem();
+                if (selectedItem == null)
+                    selectedItem = new Client("новая запись");
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(Main.class.getResource("../views/sampleClient.fxml"));
+                Parent page = loader.load();
+                Stage addStage = new Stage();
+                labelLog.setText("Работа с записью клиента - " + selectedItem.getSurname()  + " " + selectedItem.getName());
+                addStage.setTitle("Работа с записью клиента - " + selectedItem.getSurname()  + " " + selectedItem.getName());
+                addStage.initModality(Modality.APPLICATION_MODAL);
+                addStage.initOwner(Main.getPrimaryStage());
+                Scene scene = new Scene(page);
+                addStage.setScene(scene);
+                ControllerClient controller = loader.getController();
+                controller.setDialogStage(addStage, selectedItem);
+                addStage.setMinWidth(950);
+                addStage.setMinHeight(500);
+                addStage.showAndWait();
+                fillTableClients();
+                labelLog.setText("Ожидание действий пользователя. Приятной работы.");
+            } catch (IOException ex) {
+                MessageWindow.showError("Открытие окна", ex.getMessage());
+            }
+        }
     }
+
     public void onTourOperatorClick(MouseEvent mouseEvent) {
+    }
+
+    public void onEmployeeClick(MouseEvent mouseEvent) {
+        if (mouseEvent.getClickCount() > 1) {
+            employeeAccountEnter(tableEmployee.getSelectionModel().getSelectedItem());
+        }
+    }
+
+    private void employeeAccountEnter(Employee selectedItem){
+        try {
+            if (selectedItem == null)
+                selectedItem = new Employee("новая запись");
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Main.class.getResource("../views/sampleEmployee.fxml"));
+            Parent page = loader.load();
+            Stage addStage = new Stage();
+            labelLog.setText("Работа с записью пользователя - " + selectedItem.getSurname()  + " " + selectedItem.getName());
+            addStage.setTitle("Работа с записью пользователя - " + selectedItem.getSurname()  + " " + selectedItem.getName());
+            addStage.initModality(Modality.APPLICATION_MODAL);
+            addStage.initOwner(Main.getPrimaryStage());
+            Scene scene = new Scene(page);
+            addStage.setScene(scene);
+            ControllerEmployee controller = loader.getController();
+            controller.setDialogStage(addStage, selectedItem);
+            addStage.setMinWidth(1000);
+            addStage.setMinHeight(400);
+            addStage.showAndWait();
+            fillTableEmployees();
+            labelLog.setText("Ожидание действий пользователя. Приятной работы.");
+        } catch (IOException ex) {
+            MessageWindow.showError("Открытие окна", ex.getMessage());
+        }
     }
 
     public void onTourClick(MouseEvent mouseEvent) {
@@ -699,8 +816,6 @@ public class ControllerMainWindow {
     public void onVoucherClick(MouseEvent mouseEvent) {
     }
 
-    public void onEmployeeClick(MouseEvent mouseEvent) {
-    }
 
 
     public void onClientSearch(ActionEvent actionEvent) {
@@ -827,6 +942,45 @@ public class ControllerMainWindow {
                 fillTableHotels(result);
             else MessageWindow.showInformation("Поиск отелей", "отелей с наименованием содержащим (" +
                     name + ") и направлением содержащим (" + direction + ") не найдено");
+            labelLog.setText("Ожидание действий пользователя. Приятной работы.");
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    public void onVoucherSearch(ActionEvent actionEvent) {
+        try {
+            Voucher item = new Voucher();
+            Tour subItem = new Tour();
+            String direction = textVoucherDirection.getText();
+            String name = textVoucherName.getText();
+            LocalDate date = dateVoucherDate.getValue();
+            subItem.setDirection("\'%" + direction + "%\'");
+            subItem.setName("\'%" + name + "%\'");
+            if(date == null || date.toString() == null || date.toString().equals("")) date = LocalDate.of(0001,01,01);
+            item.setDate(date);
+            ResultSet result = SQLRequests.selectSearch((conn), item, subItem);
+            if (result.isBeforeFirst())
+                fillTableVoucher(result);
+            else MessageWindow.showInformation("Поиск путевок", "путевок с направлением содержащим (" +
+                    direction + "), направлением содержащим (" + name + ") и датой с (" + date.toString() + ") не найдено");
+            labelLog.setText("Ожидание действий пользователя. Приятной работы.");
+            dateVoucherDate.setValue(null);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    public void onEmployeeSearch(ActionEvent actionEvent) {
+        try {
+            Employee item = new Employee();
+            String surname = textEmployeeSurname.getText();
+            item.setSurname("\'%" + surname + "%\'");
+            ResultSet result = SQLRequests.selectSearch((conn), item);
+            if (result.isBeforeFirst())
+                fillTableEmployees(result);
+            else MessageWindow.showInformation("Поиск сотрудников", "сотрудников с фамилией содержащей (" +
+                    surname + ") не найдено");
             labelLog.setText("Ожидание действий пользователя. Приятной работы.");
         } catch (SQLException throwables) {
             throwables.printStackTrace();
