@@ -1,9 +1,8 @@
 package controllersAll;
 
-import com.sun.glass.ui.Application;
 import dbClasses.DbHandler;
 import dbClasses.SQLRequests;
-import dbClasses.tables.*;
+import dbClasses.models.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -457,7 +456,7 @@ public class ControllerMainWindow {
             resultSetFromOtherTable = SQLRequests.selectOneRow(conn, DbHandler.TABLE_NAME_KIND, tour.getIdKind());
             resultSetFromOtherTable.next();
             tour.setKind(resultSetFromOtherTable.getString(Kind.FIELD_NAME));
-            resultSetFromOtherTable = SQLRequests.selectOneRow(conn, DbHandler.TABLE_NAME_KIND, tour.getIdCategory());
+            resultSetFromOtherTable = SQLRequests.selectOneRow(conn, DbHandler.TABLE_NAME_CATEGORY, tour.getIdCategory());
             resultSetFromOtherTable.next();
             tour.setCategory(resultSetFromOtherTable.getString(Category.FIELD_NAME));
             tours.add(tour);
@@ -837,9 +836,63 @@ public class ControllerMainWindow {
     }
 
     public void onTourClick(MouseEvent mouseEvent) {
+        if (mouseEvent.getClickCount() > 1) {
+            try {
+                Tour selectedItem = tableTours.getSelectionModel().getSelectedItem();
+                if (selectedItem == null)
+                    selectedItem = new Tour("новая запись");
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(Main.class.getResource("../views/sampleTour.fxml"));
+                Parent page = loader.load();
+                Stage addStage = new Stage();
+                labelLog.setText("Работа с записью тура - " + selectedItem.getName());
+                addStage.setTitle("Работа с записью тура - " + selectedItem.getName());
+                addStage.initModality(Modality.APPLICATION_MODAL);
+                addStage.initOwner(Main.getPrimaryStage());
+                Scene scene = new Scene(page);
+                addStage.setScene(scene);
+                ControllerTour controller = loader.getController();
+                controller.setDialogStage(addStage, selectedItem);
+                addStage.setMinWidth(950);
+                addStage.setMinHeight(500);
+                addStage.showAndWait();
+                fillTableTour();
+                labelLog.setText("Ожидание действий пользователя. Приятной работы.");
+            } catch (IOException ex) {
+                MessageWindow.showError("Открытие окна", ex.getMessage());
+            }
+        }
     }
 
     public void onVoucherClick(MouseEvent mouseEvent) {
+        if (mouseEvent.getClickCount() > 1) {
+            try {
+                if (tableVouchers.getSelectionModel().getSelectedItem() != null) {
+                    Voucher selectedItem = tableVouchers.getSelectionModel().getSelectedItem();
+                    if (selectedItem == null)
+                        selectedItem = new Voucher();
+                    FXMLLoader loader = new FXMLLoader();
+                    loader.setLocation(Main.class.getResource("../views/sampleVoucher.fxml"));
+                    Parent page = loader.load();
+                    Stage addStage = new Stage();
+                    labelLog.setText("Работа с записью путевки по туру - " + selectedItem.getTourName());
+                    addStage.setTitle("Работа с записью путевки по туру - " + selectedItem.getTourName());
+                    addStage.initModality(Modality.APPLICATION_MODAL);
+                    addStage.initOwner(Main.getPrimaryStage());
+                    Scene scene = new Scene(page);
+                    addStage.setScene(scene);
+                    ControllerVoucher controller = loader.getController();
+                    controller.setDialogStage(addStage, selectedItem, selectedItem.getIdTour());
+                    addStage.setMinWidth(900);
+                    addStage.setMinHeight(500);
+                    addStage.showAndWait();
+                    fillTableVoucher();
+                    labelLog.setText("Ожидание действий пользователя. Приятной работы.");
+                }
+            } catch (IOException ex) {
+                MessageWindow.showError("Открытие окна", ex.getMessage());
+            }
+        }
     }
 
 

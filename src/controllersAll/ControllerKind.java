@@ -2,7 +2,7 @@ package controllersAll;
 
 import dbClasses.DbHandler;
 import dbClasses.SQLRequests;
-import dbClasses.tables.Kind;
+import dbClasses.models.Kind;
 import javafx.event.ActionEvent;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;

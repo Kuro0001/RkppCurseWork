@@ -1,16 +1,387 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllersAll.ControllerTour">
+<AnchorPane minHeight="700.0" minWidth="1000.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllersAll.ControllerTour">
    <children>
       <SplitPane dividerPositions="0.29797979797979796" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" />
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" />
+          <AnchorPane maxWidth="200.0" minHeight="700.0" minWidth="200.0">
+               <children>
+                  <VBox alignment="CENTER" minHeight="300.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <Label minWidth="0.0" text="Наименование">
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </VBox.margin>
+                        </Label>
+                        <TextField fx:id="textName" minWidth="0.0">
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </VBox.margin>
+                        </TextField>
+                        <Label minWidth="0.0" text="кол-во предложений">
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </VBox.margin>
+                        </Label>
+                        <TextField fx:id="textOffersCount" minWidth="0.0">
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </VBox.margin>
+                        </TextField>
+                        <Label minWidth="0.0" text="Дата начала тура">
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </VBox.margin>
+                        </Label>
+                        <DatePicker fx:id="dateDateStart" minWidth="0.0">
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </VBox.margin>
+                        </DatePicker>
+                        <Label minWidth="0.0" text="Кол-во дней">
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </VBox.margin>
+                        </Label>
+                        <TextField fx:id="textDaysCount" minWidth="0.0">
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </VBox.margin>
+                        </TextField>
+                        <Label minWidth="40.0" text="Цена" />
+                        <TextField fx:id="textPrice" minWidth="100.0">
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </VBox.margin>
+                        </TextField>
+                        <Label minWidth="40.0" text="Туроператор">
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </VBox.margin>
+                        </Label>
+                        <Label fx:id="labelTourOperator" minWidth="40.0" text="-" />
+                        <HBox alignment="CENTER" minWidth="0.0">
+                           <children>
+                              <Label alignment="CENTER" minWidth="0.0" text="Кол-во оформленных предложений" textAlignment="CENTER" wrapText="true">
+                                 <HBox.margin>
+                                    <Insets left="5.0" right="5.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <Label fx:id="labelVouchersCount" alignment="CENTER" minWidth="80.0" text="0" textAlignment="CENTER">
+                                 <HBox.margin>
+                                    <Insets left="5.0" right="5.0" />
+                                 </HBox.margin>
+                              </Label>
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <HBox alignment="CENTER" minWidth="0.0">
+                           <children>
+                              <Label minWidth="40.0" text="Отель" textAlignment="CENTER">
+                                 <HBox.margin>
+                                    <Insets right="5.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <Label fx:id="lableHotel" minWidth="30.0" text="-" textAlignment="CENTER" wrapText="true" />
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <HBox alignment="CENTER" minWidth="0.0">
+                           <children>
+                              <Label minWidth="80.0" text="Направление" />
+                              <Label fx:id="labelDirection" minWidth="70.0" text="-" />
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <HBox alignment="CENTER" minWidth="0.0">
+                           <children>
+                              <Label minWidth="40.0" text="Вид" />
+                              <Label fx:id="labelKind" minWidth="40.0" text="-" />
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <HBox alignment="CENTER" minWidth="0.0">
+                           <children>
+                              <Label minWidth="60.0" text="Категория" />
+                              <Label fx:id="labelCategory" minWidth="50.0" text="-" />
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </VBox.margin>
+                        </HBox>
+                     </children>
+                     <padding>
+                        <Insets top="15.0" />
+                     </padding>
+                  </VBox>
+                  <VBox alignment="CENTER" minHeight="130.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                     <children>
+                        <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#onAddVoucher" text="Оформить новую путевку">
+                           <VBox.margin>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </VBox.margin>
+                        </Button>
+                        <Button minWidth="100.0" mnemonicParsing="false" onAction="#onAdd" text="Добавить">
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </VBox.margin>
+                        </Button>
+                        <Button minWidth="100.0" mnemonicParsing="false" onAction="#onEdit" text="Редактировоать">
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </VBox.margin>
+                        </Button>
+                        <Button minWidth="100.0" mnemonicParsing="false" onAction="#onDelete" text="Удалить">
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </VBox.margin>
+                        </Button>
+                     </children>
+                  </VBox>
+               </children></AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="900.0">
+               <children>
+                  <TabPane prefHeight="398.4" prefWidth="698.4" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <tabs>
+                      <Tab text="Туроператоры">
+                        <content>
+                           <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0">
+                              <children>
+                                 <HBox alignment="CENTER_LEFT" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <children>
+                                       <Label minWidth="90.0" text="Наименование">
+                                          <HBox.margin>
+                                             <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
+                                          </HBox.margin>
+                                       </Label>
+                                       <TextField fx:id="textTourOperatorName" maxWidth="150.0" minWidth="150.0">
+                                          <HBox.margin>
+                                             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                          </HBox.margin>
+                                       </TextField>
+                                       <Label minWidth="120.0" text="ун. номер компании">
+                                          <HBox.margin>
+                                             <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
+                                          </HBox.margin>
+                                       </Label>
+                                       <TextField fx:id="textTourOperatorUniqueNumber" maxWidth="150.0" minWidth="150.0">
+                                          <HBox.margin>
+                                             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                          </HBox.margin>
+                                       </TextField>
+                                       <Button minWidth="150.0" mnemonicParsing="false" onAction="#onTourOperatorSearch" text="Найти туроператоров">
+                                          <HBox.margin>
+                                             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                          </HBox.margin>
+                                       </Button>
+                                    </children>
+                                 </HBox>
+                                 <TableView fx:id="tableTourOperators" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#onTourOperatorClick" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0">
+                                    <columns>
+                                       <TableColumn fx:id="columnTourOperatorName" prefWidth="75.0" text="наименование" />
+                                       <TableColumn fx:id="columnTourOperatorPhone" prefWidth="75.0" text="контактный номер телефона" />
+                                       <TableColumn fx:id="columnTourOperatorNumber" prefWidth="75.0" text="ун. номер компании" />
+                                       <TableColumn fx:id="columnTourOperatorEmail" prefWidth="75.0" text="e-mail" />
+                                    </columns>
+                                    <columnResizePolicy>
+                                       <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                    </columnResizePolicy>
+                                 </TableView>
+                              </children></AnchorPane>
+                        </content>
+                      </Tab>
+                        <Tab text="Отели">
+                           <content>
+                              <AnchorPane minHeight="0.0" prefHeight="160.0" prefWidth="100.0">
+                                 <children>
+                                    <HBox alignment="CENTER_LEFT" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <children>
+                                          <Label minWidth="90.0" text="Наименование">
+                                             <HBox.margin>
+                                                <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
+                                             </HBox.margin>
+                                          </Label>
+                                          <TextField fx:id="textHotelName" maxWidth="150.0" minWidth="150.0">
+                                             <HBox.margin>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </HBox.margin>
+                                          </TextField>
+                                          <Label minWidth="75.0" text="Направление">
+                                             <HBox.margin>
+                                                <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
+                                             </HBox.margin>
+                                          </Label>
+                                          <TextField fx:id="textHotelDirection" maxWidth="150.0" minWidth="150.0">
+                                             <HBox.margin>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </HBox.margin>
+                                          </TextField>
+                                          <Button minWidth="125.0" mnemonicParsing="false" onAction="#onHotelSearch" text="Найти направления">
+                                             <HBox.margin>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </HBox.margin>
+                                          </Button>
+                                       </children>
+                                    </HBox>
+                                    <TableView fx:id="tableHotels" onMouseClicked="#onHotelClick" prefHeight="464.0" prefWidth="564.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0">
+                                       <columns>
+                                          <TableColumn fx:id="columnHotelName" prefWidth="75.0" text="Наименование" />
+                                          <TableColumn fx:id="columnHotelAddress" prefWidth="75.0" text="Адрес" />
+                                          <TableColumn fx:id="columnHotelDirection" prefWidth="75.0" text="Направление" />
+                                       </columns>
+                                       <columnResizePolicy>
+                                          <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                       </columnResizePolicy>
+                                    </TableView>
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </Tab>
+                        <Tab text="Виды и категории туров">
+                           <content>
+                              <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0">
+                                 <children>
+                                    <SplitPane dividerPositions="0.3955853174603175" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <items>
+                                          <AnchorPane minHeight="0.0" prefHeight="160.0" prefWidth="100.0">
+                                             <children>
+                                                <HBox AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   <children>
+                                                      <Label minWidth="90.0" text="Наименование">
+                                                         <HBox.margin>
+                                                            <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
+                                                         </HBox.margin>
+                                                      </Label>
+                                                      <TextField fx:id="textKindName" maxWidth="150.0" minWidth="150.0">
+                                                         <HBox.margin>
+                                                            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                         </HBox.margin>
+                                                      </TextField>
+                                                      <Button minWidth="120.0" mnemonicParsing="false" onAction="#onKindSearch" text="Найти виды туров">
+                                                         <HBox.margin>
+                                                            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                         </HBox.margin>
+                                                      </Button>
+                                                   </children>
+                                                </HBox>
+                                                <TableView fx:id="tableKinds" onMouseClicked="#onKindClick" prefHeight="464.0" prefWidth="237.6" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0">
+                                                   <columns>
+                                                      <TableColumn fx:id="columnKindName" prefWidth="75.0" text="Наименование категории тура" />
+                                                   </columns>
+                                                   <columnResizePolicy>
+                                                      <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                                   </columnResizePolicy>
+                                                </TableView>
+                                             </children>
+                                          </AnchorPane>
+                                          <AnchorPane minHeight="0.0" prefHeight="160.0" prefWidth="100.0">
+                                             <children>
+                                                <HBox AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   <children>
+                                                      <Label minWidth="90.0" text="Наименование">
+                                                         <HBox.margin>
+                                                            <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
+                                                         </HBox.margin>
+                                                      </Label>
+                                                      <TextField fx:id="textCategoryName" maxWidth="150.0" minWidth="150.0">
+                                                         <HBox.margin>
+                                                            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                         </HBox.margin>
+                                                      </TextField>
+                                                      <Button minWidth="120.0" mnemonicParsing="false" onAction="#onCategorySearch" text="Найти категории туров">
+                                                         <HBox.margin>
+                                                            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                         </HBox.margin>
+                                                      </Button>
+                                                   </children>
+                                                </HBox>
+                                                <TableView fx:id="tableCategories" onMouseClicked="#onCategoryClick" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0">
+                                                   <columns>
+                                                      <TableColumn fx:id="columnCategoryName" prefWidth="75.0" text="Наименование категории" />
+                                                      <TableColumn fx:id="columnCategoryAddedValue" prefWidth="75.0" text="Добавочная стоимость" />
+                                                      <TableColumn fx:id="columnCategoryDiscount" prefWidth="75.0" text="Скидка" />
+                                                   </columns>
+                                                   <columnResizePolicy>
+                                                      <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                                   </columnResizePolicy>
+                                                </TableView>
+                                             </children>
+                                          </AnchorPane>
+                                       </items>
+                                    </SplitPane>
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </Tab>
+                        <Tab text="Путевки">
+                           <content>
+                              <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0">
+                                 <children>
+                                    <HBox AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <children>
+                                          <Label minWidth="30.0" text="Дата с">
+                                             <HBox.margin>
+                                                <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
+                                             </HBox.margin>
+                                          </Label>
+                                          <DatePicker fx:id="dateVoucherDate">
+                                             <HBox.margin>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </HBox.margin>
+                                          </DatePicker>
+                                          <Button minWidth="125.0" mnemonicParsing="false" onAction="#onVoucherSearch" text="Найти путевки">
+                                             <HBox.margin>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </HBox.margin>
+                                          </Button>
+                                       </children>
+                                    </HBox>
+                                    <TableView fx:id="tableVouchers" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#onVoucherClick" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0">
+                                       <columns>
+                                          <TableColumn fx:id="columnVoucherTour" prefWidth="75.0" text="наименование тура" />
+                                          <TableColumn fx:id="columnVoucherTourDirection" prefWidth="75.0" text="направление тура" />
+                                          <TableColumn fx:id="columnVoucherClient" prefWidth="75.0" text="заказчик" />
+                                          <TableColumn fx:id="columnVoucherEmployee" prefWidth="75.0" text="оформитель" />
+                                          <TableColumn fx:id="columnVoucherCost" prefWidth="75.0" text="стоимость" />
+                                          <TableColumn fx:id="columnVoucherDate" prefWidth="75.0" text="дата оформления" />
+                                       </columns>
+                                       <columnResizePolicy>
+                                          <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                       </columnResizePolicy>
+                                    </TableView>
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </Tab>
+                    </tabs>
+                  </TabPane>
+               </children></AnchorPane>
         </items>
       </SplitPane>
    </children>
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
 </AnchorPane>

@@ -1,16 +1,14 @@
-package dbClasses.tables;
+package dbClasses.models;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import org.jetbrains.annotations.Nullable;
 
 public class Employee {
     private IntegerProperty id;
     private StringProperty name;
     private StringProperty surname;
-    @Nullable
     private StringProperty patronymic;
     private StringProperty email;
 
@@ -20,7 +18,7 @@ public class Employee {
     public static final String FIELD_PATRONYMIC = "PATRONYMIC";
     public static final String FIELD_EMAIL = "EMAIL";
 
-    public Employee(int id, String name, String surname,@Nullable String patronymic, String email) {
+    public Employee(int id, String name, String surname, String patronymic, String email) {
         this.id = new SimpleIntegerProperty(id);
         this.name = new SimpleStringProperty(name);
         this.surname = new SimpleStringProperty(surname);
@@ -43,9 +41,7 @@ public class Employee {
     public StringProperty surnameNumberProperty() { return surname; }
     public void setSurname(String surname) {  this.surname.set(surname); }
 
-    @Nullable
     public String getPatronymic() { return patronymic.get(); }
-    @Nullable
     public StringProperty patronymicProperty() { return patronymic; }
     public void setPatronymic(String patronymic) { this.patronymic.set(patronymic);}
 

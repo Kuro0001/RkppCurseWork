@@ -1,7 +1,6 @@
-package dbClasses.tables;
+package dbClasses.models;
 
 import javafx.beans.property.*;
-import org.jetbrains.annotations.Nullable;
 
 import java.time.LocalDate;
 
@@ -59,6 +58,8 @@ public class Tour {
     }
 
     public Tour() { this(0,"",0,"",0,0,0,"",0,"",0,LocalDate.MIN, 0,0,"",0,""); }
+    public Tour(String name) { this(0,"",0,"",0,0,0,"",0,"",0,LocalDate.MIN, 0,0,"",0,""); }
+
 
     public int getId() { return id.get(); }
     public IntegerProperty idProperty() { return id; }

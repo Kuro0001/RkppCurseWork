@@ -1,19 +1,10 @@
 package controllersAll;
 
-import com.mysql.cj.protocol.Resultset;
 import dbClasses.DbHandler;
 import dbClasses.SQLRequests;
-import dbClasses.tables.*;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import dbClasses.models.*;
 import javafx.event.ActionEvent;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import mains.Main;
 import mains.MessageWindow;
@@ -21,7 +12,6 @@ import mains.MessageWindow;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 
 public class ControllerAuthorisation {
 

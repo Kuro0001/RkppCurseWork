@@ -1,6 +1,6 @@
 package mains;
 
-import dbClasses.tables.Employee;
+import dbClasses.models.Employee;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

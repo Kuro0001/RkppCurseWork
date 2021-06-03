@@ -1,7 +1,6 @@
-package dbClasses.tables;
+package dbClasses.models;
 
 import javafx.beans.property.*;
-import org.jetbrains.annotations.Nullable;
 
 import java.time.LocalDate;
 
@@ -39,6 +38,8 @@ public class Voucher {
     }
 
     public Voucher() { this(0,0,"","",0,"",0,"",LocalDate.MIN,0); }
+    public Voucher(int idTour) { this(0,idTour,"","",0,"",0,"",LocalDate.MIN,0); }
+
 
     public int getId() { return id.get(); }
     public IntegerProperty idProperty() { return id; }

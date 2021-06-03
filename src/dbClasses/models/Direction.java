@@ -1,4 +1,4 @@
-package dbClasses.tables;
+package dbClasses.models;
 
 import javafx.beans.property.*;
 

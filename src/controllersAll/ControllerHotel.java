@@ -2,9 +2,8 @@ package controllersAll;
 
 import dbClasses.DbHandler;
 import dbClasses.SQLRequests;
-import dbClasses.tables.Direction;
-import dbClasses.tables.Hotel;
-import dbClasses.tables.Result;
+import dbClasses.models.Direction;
+import dbClasses.models.Hotel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;

@@ -2,7 +2,7 @@ package controllersAll;
 
 import dbClasses.DbHandler;
 import dbClasses.SQLRequests;
-import dbClasses.tables.*;
+import dbClasses.models.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;

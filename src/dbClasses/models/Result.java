@@ -1,8 +1,6 @@
-package dbClasses.tables;
+package dbClasses.models;
 
 import javafx.beans.property.*;
-
-import java.time.LocalDate;
 
 public class Result {
     private IntegerProperty id;
