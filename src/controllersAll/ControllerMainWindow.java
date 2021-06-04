@@ -120,7 +120,7 @@ public class ControllerMainWindow {
 
     @FXML
     void initialize() {
-        //authorisation();
+        authorisation();
         setTableKind();
         setTableCategories();
         setTableDirections();
@@ -566,7 +566,7 @@ public class ControllerMainWindow {
             labelLog.setText("Производится авторизация");
             Main.setUser(new Employee());
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(Main.class.getResource("../views/sampleAuthorisation.fxml"));
+            loader.setLocation(Main.class.getResource("/views/sampleAuthorisation.fxml"));
             Parent page = loader.load();
             Stage addStage = new Stage();
             addStage.setTitle("Авторизация пользователя");
@@ -634,7 +634,7 @@ public class ControllerMainWindow {
                 if (selectedItem == null)
                     selectedItem = new Kind("новая запись");
                 FXMLLoader loader = new FXMLLoader();
-                loader.setLocation(Main.class.getResource("../views/sampleKind.fxml"));
+                loader.setLocation(Main.class.getResource("/views/sampleKind.fxml"));
                 Parent page = loader.load();
                 Stage addStage = new Stage();
                 labelLog.setText("Работа с записью вида - " + selectedItem.getName());
@@ -663,7 +663,7 @@ public class ControllerMainWindow {
                 if (selectedItem == null)
                     selectedItem = new Category("новая запись");
                 FXMLLoader loader = new FXMLLoader();
-                loader.setLocation(Main.class.getResource("../views/sampleCategory.fxml"));
+                loader.setLocation(Main.class.getResource("/views/sampleCategory.fxml"));
                 Parent page = loader.load();
                 Stage addStage = new Stage();
                 labelLog.setText("Работа с записью категории - " + selectedItem.getName());
@@ -692,7 +692,7 @@ public class ControllerMainWindow {
                 if (selectedItem == null)
                     selectedItem = new Direction("новая запись");
                 FXMLLoader loader = new FXMLLoader();
-                loader.setLocation(Main.class.getResource("../views/sampleDirection.fxml"));
+                loader.setLocation(Main.class.getResource("/views/sampleDirection.fxml"));
                 Parent page = loader.load();
                 Stage addStage = new Stage();
                 labelLog.setText("Работа с записью направления - " + selectedItem.getName());
@@ -721,7 +721,7 @@ public class ControllerMainWindow {
                 if (selectedItem == null)
                     selectedItem = new Hotel("новая запись");
                 FXMLLoader loader = new FXMLLoader();
-                loader.setLocation(Main.class.getResource("../views/sampleHotel.fxml"));
+                loader.setLocation(Main.class.getResource("/views/sampleHotel.fxml"));
                 Parent page = loader.load();
                 Stage addStage = new Stage();
                 labelLog.setText("Работа с записью отеля - " + selectedItem.getName());
@@ -752,7 +752,7 @@ public class ControllerMainWindow {
                 if (selectedItem == null)
                     selectedItem = new Client("новая запись");
                 FXMLLoader loader = new FXMLLoader();
-                loader.setLocation(Main.class.getResource("../views/sampleClient.fxml"));
+                loader.setLocation(Main.class.getResource("/views/sampleClient.fxml"));
                 Parent page = loader.load();
                 Stage addStage = new Stage();
                 labelLog.setText("Работа с записью клиента - " + selectedItem.getSurname()  + " " + selectedItem.getName());
@@ -781,7 +781,7 @@ public class ControllerMainWindow {
                 if (selectedItem == null)
                     selectedItem = new TourOperator("новая запись");
                 FXMLLoader loader = new FXMLLoader();
-                loader.setLocation(Main.class.getResource("../views/sampleTourOperator.fxml"));
+                loader.setLocation(Main.class.getResource("/views/sampleTourOperator.fxml"));
                 Parent page = loader.load();
                 Stage addStage = new Stage();
                 labelLog.setText("Работа с записью туроператора - " +  selectedItem.getName());
@@ -814,7 +814,7 @@ public class ControllerMainWindow {
             if (selectedItem == null)
                 selectedItem = new Employee("новая запись");
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(Main.class.getResource("../views/sampleEmployee.fxml"));
+            loader.setLocation(Main.class.getResource("/views/sampleEmployee.fxml"));
             Parent page = loader.load();
             Stage addStage = new Stage();
             labelLog.setText("Работа с записью пользователя - " + selectedItem.getSurname()  + " " + selectedItem.getName());
@@ -842,7 +842,7 @@ public class ControllerMainWindow {
                 if (selectedItem == null)
                     selectedItem = new Tour("новая запись");
                 FXMLLoader loader = new FXMLLoader();
-                loader.setLocation(Main.class.getResource("../views/sampleTour.fxml"));
+                loader.setLocation(Main.class.getResource("/views/sampleTour.fxml"));
                 Parent page = loader.load();
                 Stage addStage = new Stage();
                 labelLog.setText("Работа с записью тура - " + selectedItem.getName());
@@ -872,7 +872,7 @@ public class ControllerMainWindow {
                     if (selectedItem == null)
                         selectedItem = new Voucher();
                     FXMLLoader loader = new FXMLLoader();
-                    loader.setLocation(Main.class.getResource("../views/sampleVoucher.fxml"));
+                    loader.setLocation(Main.class.getResource("/views/sampleVoucher.fxml"));
                     Parent page = loader.load();
                     Stage addStage = new Stage();
                     labelLog.setText("Работа с записью путевки по туру - " + selectedItem.getTourName());

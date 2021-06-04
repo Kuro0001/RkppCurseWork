@@ -123,7 +123,7 @@ public class SQLRequests {
         String query = "SELECT voucher.* FROM tour, voucher, tourist " +
                 "WHERE tour.id in (SELECT id FROM tour WHERE hotel in " +
                 "(SELECT id FROM hotel WHERE direction in (SELECT id FROM direction WHERE name LIKE " + tour.getDirection() + "))) " +
-                "AND tour.name LIKE \'" + tour.getName() + "\' " +
+                "AND tour.name LIKE " + tour.getName() + " " +
                 "AND tour.id = voucher.tour AND voucher.date > " + voucher.getDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")).replace("-", "") +
                 " AND tourist.ID_voucher = voucher.id AND voucher.employee = " + idEmployee;
         ResultSet set = conn.createStatement().executeQuery(query);

@@ -179,7 +179,7 @@ public class ControllerTourOperator {
                 if (selectedItem == null)
                     selectedItem = new Tour("новая запись");
                 FXMLLoader loader = new FXMLLoader();
-                loader.setLocation(Main.class.getResource("../views/sampleTour.fxml"));
+                loader.setLocation(Main.class.getResource("/views/sampleTour.fxml"));
                 Parent page = loader.load();
                 Stage addStage = new Stage();
                 addStage.setTitle("Работа с записью тура - " + selectedItem.getName());

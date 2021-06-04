@@ -485,7 +485,7 @@ public class ControllerTour {
             try {
                 Voucher selectedItem = new Voucher();
                 FXMLLoader loader = new FXMLLoader();
-                loader.setLocation(Main.class.getResource("../views/sampleVoucher.fxml"));
+                loader.setLocation(Main.class.getResource("/views/sampleVoucher.fxml"));
                 Parent page = loader.load();
                 Stage addStage = new Stage();
                 addStage.setTitle("Работа с записью путевки по туру - " + selectedItem.getTourName());
@@ -516,7 +516,7 @@ public class ControllerTour {
                         if (selectedItem == null)
                             selectedItem = new Voucher();
                         FXMLLoader loader = new FXMLLoader();
-                        loader.setLocation(Main.class.getResource("../views/sampleVoucher.fxml"));
+                        loader.setLocation(Main.class.getResource("/views/sampleVoucher.fxml"));
                         Parent page = loader.load();
                         Stage addStage = new Stage();
                         addStage.setTitle("Работа с записью путевки по туру - " + selectedItem.getTourName());

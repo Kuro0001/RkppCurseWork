@@ -6,12 +6,16 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * class for data base
+ * @author Kuro
+ */
 public class DbHandler {
     protected Connection connection;
     public static final String DB_NAME = "curesworktouristagency";
     private static final String DB_URL = "jdbc:mysql://localhost:3306/" + DB_NAME;
     private static final String LOGIN = "root";
-    private static final String PASSWORD = "sysadmin";
+    private static final String PASSWORD = "password";
 
     public static final String TABLE_NAME_KIND = "kind";
     public static final String TABLE_NAME_CATEGORY = "category";
