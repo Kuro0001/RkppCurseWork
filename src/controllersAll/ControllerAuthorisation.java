@@ -12,7 +12,11 @@ import mains.MessageWindow;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
+/**
+ * model for sample sampleAuthorisation
+ * @author Kuro
+ * @version 1.0
+ */
 public class ControllerAuthorisation {
 
     public TextField textSurname;
@@ -23,10 +27,15 @@ public class ControllerAuthorisation {
     DbHandler dbHandler;
     private Employee workItem;
 
+    /**
+     * constructor - creating a new object
+     */
     public void setDialogStage(Stage dialogStage) {
         setDialogStage(dialogStage, new Employee("новая запись"));
     }
-
+    /**
+     * constructor - creating a new object
+     */
     public void setDialogStage(Stage dialogStage, Employee workItem) {
         this.dialogStage = dialogStage;
         dbHandler = new DbHandler();
@@ -37,7 +46,9 @@ public class ControllerAuthorisation {
         textEmail.setText(workItem.getEmail());
     }
 
-
+    /**
+     * checking input data
+     */
     private boolean validation(String process) {
         if (textSurname.getText().equals("") || textSurname.getText().length() > 45) {
             MessageWindow.showError(process, "Неверно введена Фамилия, либо больше 45 символов");
@@ -49,12 +60,16 @@ public class ControllerAuthorisation {
         }
         return true;
     }
-
+    /**
+     * set into work item new data
+     */
     private void setWorkItem() {
         workItem.setSurname(textSurname.getText());
         workItem.setEmail(textEmail.getText());
     }
-
+    /**
+     * make authorisation
+     */
     public void onEnter(ActionEvent actionEvent) {
         if (validation("Попытка авторизации")) {
             try {

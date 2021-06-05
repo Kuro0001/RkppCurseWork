@@ -10,7 +10,11 @@ import mains.MessageWindow;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-
+/**
+ * model for table Kind
+ * @author Kuro
+ * @version 1.0
+ */
 public class ControllerKind {
 
     private Stage dialogStage;
@@ -18,12 +22,17 @@ public class ControllerKind {
     Connection conn;
     DbHandler dbHandler;
     private Kind workItem;
-
+    /**
+     * set work item at start
+     */
     public void setDialogStage(Stage dialogStage){
         this.dialogStage = dialogStage;
         dbHandler = new DbHandler();
         conn = dbHandler.getConnection();
     }
+    /**
+     * set work item at start
+     */
     public void setDialogStage(Stage dialogStage, Kind kind){
         this.dialogStage = dialogStage;
         dbHandler = new DbHandler();
@@ -31,7 +40,9 @@ public class ControllerKind {
         this.workItem = kind;
         textName.setText(kind.getName());
     }
-
+    /**
+     * checking input data
+     */
     public boolean validation(String process){
         if (textName.getText().equals("") || textName.getText().length() > 45) {
             MessageWindow.showError(process, "Неверное введено Наименование, либо больше 45 символов");
@@ -39,11 +50,15 @@ public class ControllerKind {
         }
         return true;
     }
-
+    /**
+     * set into work item new data
+     */
     public void setWorkItem(){
         workItem.setName(textName.getText());
     }
-
+    /**
+     * add new record in data base
+     */
     public void onAdd(ActionEvent actionEvent) {
         if (validation("Добавление")) {
             try {
@@ -59,6 +74,9 @@ public class ControllerKind {
         }
     }
 
+    /**
+     * edit record in data base
+     */
     public void onEdit(ActionEvent actionEvent) {
         if (validation("Изменение") && workItem.getId() >0) {
             try {
@@ -72,7 +90,9 @@ public class ControllerKind {
             }
         }
     }
-
+    /**
+     * delete record from data base
+     */
     public void onDelete(ActionEvent actionEvent) {
         if (workItem.getId() > 0) {
             try {

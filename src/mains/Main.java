@@ -8,23 +8,38 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
+ * main executable file
  * @author Kuro
  * @version 1.0
  */
 public class Main extends Application {
-
-
+    /** field scene */
     private static Stage primaryStage;
+    /** field current user */
     private static Employee logedInUser;
 
-    public static Stage getPrimaryStage() {
-        return primaryStage;
-    }
-    public static Employee getUser() {
-        return logedInUser;
-    }
+    /**
+     * to get parent scene
+     * @return parent stage(Stage)
+     */
+    public static Stage getPrimaryStage() { return primaryStage; }
+    /**
+     * to get current user
+     * @return current user like model(Employee)
+     */
+    public static Employee getUser() { return logedInUser; }
+
+    /**
+     * to get current user
+     * @param user - model(Employee)
+     */
     public static void setUser(Employee user) { logedInUser = user; }
 
+    /**
+     * to start the application
+     * @param primaryStage - main scene
+     * @throws Exception in situation where scene was not founded
+     */
     @Override
     public void start(Stage primaryStage) throws Exception {
         Parent root = (Parent) FXMLLoader.load(this.getClass().getResource("/views/sampleMainWindow.fxml"));
@@ -36,8 +51,9 @@ public class Main extends Application {
         primaryStage.show();
     }
 
-
-    public static void main(String[] args) {
-        launch(args);
-    }
+    /**
+     * standard constructor to launch program
+     * @param args standard args to launch program
+     */
+    public static void main(String[] args) { launch(args); }
 }

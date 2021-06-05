@@ -26,7 +26,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-
+/**
+ * model for Main window
+ * @author Kuro
+ * @version 1.0
+ */
 public class ControllerMainWindow {
     public Label labelLog;
     public Label labelAuthorization;
@@ -118,6 +122,9 @@ public class ControllerMainWindow {
     Connection conn;
     DbHandler dbHandler;
 
+    /**
+     * initialize methode to set data in table after authorisation
+     */
     @FXML
     void initialize() {
         authorisation();
@@ -132,7 +139,9 @@ public class ControllerMainWindow {
         setTableVoucher();
         setTableResults();
     }
-
+    /**
+     * set data into table
+     */
     public void setTableKind() {
         columnKindName.setCellValueFactory(StringCellDataFeatures -> StringCellDataFeatures.getValue().nameProperty());
         dbHandler = new DbHandler();
@@ -146,7 +155,9 @@ public class ControllerMainWindow {
         });
         labelLog.setText("Ожидание действий пользователя. Приятной работы.");
     }
-
+    /**
+     * fill table
+     */
     private void fillTableKinds() {
         try {
             fillTableKinds(SQLRequests.selectAllInTable((conn), DbHandler.TABLE_NAME_KIND));
@@ -154,7 +165,9 @@ public class ControllerMainWindow {
             throwables.printStackTrace();
         }
     }
-
+    /**
+     * fill table
+     */
     private void fillTableKinds(ResultSet localResultSet) throws SQLException {
         tableKinds.getItems().clear();
         while (localResultSet.next()) {
@@ -165,7 +178,9 @@ public class ControllerMainWindow {
             labelLog.setText("заполнение таблицы Kinds (виды туров)");
         }
     }
-
+    /**
+     * set data into table
+     */
     public void setTableCategories() {
         columnCategoryName.setCellValueFactory(StringCellDataFeatures -> StringCellDataFeatures.getValue().nameProperty());
         columnCategoryAddedValue.setCellValueFactory(StringCellDataFeatures -> StringCellDataFeatures.getValue().addedValueProperty().asObject());
@@ -180,7 +195,9 @@ public class ControllerMainWindow {
         });
         labelLog.setText("Ожидание действий пользователя. Приятной работы.");
     }
-
+    /**
+     * fill table
+     */
     private void fillTableCategories() {
         try {
             fillTableCategories(SQLRequests.selectAllInTable((conn), DbHandler.TABLE_NAME_CATEGORY));
@@ -188,7 +205,9 @@ public class ControllerMainWindow {
             throwables.printStackTrace();
         }
     }
-
+    /**
+     * fill table
+     */
     private void fillTableCategories(ResultSet localResultSet) throws SQLException {
         tableCategories.getItems().clear();
         while (localResultSet.next()) {
@@ -201,7 +220,9 @@ public class ControllerMainWindow {
             labelLog.setText("заполнение таблицы Categories (категории туров)");
         }
     }
-
+    /**
+     * set data into table
+     */
     public void setTableDirections() {
         columnDirectionsName.setCellValueFactory(StringCellDataFeatures -> StringCellDataFeatures.getValue().nameProperty());
         conn = dbHandler.getConnection();
@@ -214,7 +235,9 @@ public class ControllerMainWindow {
         });
         labelLog.setText("Ожидание действий пользователя. Приятной работы.");
     }
-
+    /**
+     * fill table
+     */
     private void fillTableDirections() {
         try {
             fillTableDirections(SQLRequests.selectAllInTable((conn), DbHandler.TABLE_NAME_DIRECTION));
@@ -222,7 +245,9 @@ public class ControllerMainWindow {
             throwables.printStackTrace();
         }
     }
-
+    /**
+     * fill table
+     */
     private void fillTableDirections(ResultSet localResultSet) throws SQLException {
         tableDirections.getItems().clear();
         while (localResultSet.next()) {
@@ -233,7 +258,9 @@ public class ControllerMainWindow {
             labelLog.setText("заполнение таблицы Directions (направления туров)");
         }
     }
-
+    /**
+     * set data into table
+     */
     public void setTableHotels() {
         columnHotelName.setCellValueFactory(StringCellDataFeatures -> StringCellDataFeatures.getValue().nameProperty());
         columnHotelAddress.setCellValueFactory(StringCellDataFeatures -> StringCellDataFeatures.getValue().addressProperty());
@@ -248,7 +275,9 @@ public class ControllerMainWindow {
         });
         labelLog.setText("Ожидание действий пользователя. Приятной работы.");
     }
-
+    /**
+     * fill table
+     */
     private void fillTableHotels() {
         try {
             fillTableHotels(SQLRequests.selectAllInTable((conn), DbHandler.TABLE_NAME_HOTELS));
@@ -256,7 +285,9 @@ public class ControllerMainWindow {
             throwables.printStackTrace();
         }
     }
-
+    /**
+     * fill table
+     */
     private void fillTableHotels(ResultSet localResultSet) throws SQLException {
         tableHotels.getItems().clear();
         while (localResultSet.next()) {
@@ -273,7 +304,9 @@ public class ControllerMainWindow {
             labelLog.setText("заполнение таблицы Hotels (отели)");
         }
     }
-
+    /**
+     * set data into table
+     */
     public void setTableTourOperators() {
         columnTourOperatorName.setCellValueFactory(StringCellDataFeatures -> StringCellDataFeatures.getValue().nameProperty());
         columnTourOperatorNumber.setCellValueFactory(StringCellDataFeatures -> StringCellDataFeatures.getValue().uniqueNumberProperty());
@@ -289,7 +322,9 @@ public class ControllerMainWindow {
         });
         labelLog.setText("Ожидание действий пользователя. Приятной работы.");
     }
-
+    /**
+     * fill table
+     */
     private void fillTableTourOperators() {
         try {
             fillTableTourOperators(SQLRequests.selectAllInTable((conn), DbHandler.TABLE_NAME_TOUR_OPERATOR));
@@ -297,7 +332,9 @@ public class ControllerMainWindow {
             throwables.printStackTrace();
         }
     }
-
+    /**
+     * fill table
+     */
     private void fillTableTourOperators(ResultSet localResultSet) throws SQLException {
         tableTourOperators.getItems().clear();
         while (localResultSet.next()) {
@@ -311,7 +348,9 @@ public class ControllerMainWindow {
             labelLog.setText("заполнение таблицы Tour operators (туроператоров)");
         }
     }
-
+    /**
+     * set data into table
+     */
     public void setTableEmployees() {
         columnEmployeeName.setCellValueFactory(StringCellDataFeatures -> StringCellDataFeatures.getValue().nameProperty());
         columnEmployeeSurname.setCellValueFactory(StringCellDataFeatures -> StringCellDataFeatures.getValue().surnameNumberProperty());
@@ -327,7 +366,9 @@ public class ControllerMainWindow {
         });
         labelLog.setText("Ожидание действий пользователя. Приятной работы.");
     }
-
+    /**
+     * fill table
+     */
     private void fillTableEmployees() {
         try {
             fillTableEmployees(SQLRequests.selectAllInTable((conn), DbHandler.TABLE_NAME_EMPLOYEE));
@@ -335,7 +376,9 @@ public class ControllerMainWindow {
             throwables.printStackTrace();
         }
     }
-
+    /**
+     * fill table
+     */
     private void fillTableEmployees(ResultSet localResultSet) throws SQLException {
         tableEmployee.getItems().clear();
         while (localResultSet.next()) {
@@ -349,7 +392,9 @@ public class ControllerMainWindow {
             labelLog.setText("заполнение таблицы Employee (сотрудники компании)");
         }
     }
-
+    /**
+     * set data into table
+     */
     public void setTableClients() {
         columnClientName.setCellValueFactory(StringCellDataFeatures -> StringCellDataFeatures.getValue().nameProperty());
         columnClientSurname.setCellValueFactory(StringCellDataFeatures -> StringCellDataFeatures.getValue().surnameNumberProperty());
@@ -369,7 +414,9 @@ public class ControllerMainWindow {
         });
         labelLog.setText("Ожидание действий пользователя. Приятной работы.");
     }
-
+    /**
+     * fill table
+     */
     private void fillTableClients() {
         try {
             fillTableClients(SQLRequests.selectAllInTable((conn), DbHandler.TABLE_NAME_CLIENT));
@@ -377,7 +424,9 @@ public class ControllerMainWindow {
             throwables.printStackTrace();
         }
     }
-
+    /**
+     * fill table
+     */
     private void fillTableClients(ResultSet localResultSet) throws SQLException {
         tableClients.getItems().clear();
         while (localResultSet.next()) {
@@ -395,7 +444,9 @@ public class ControllerMainWindow {
             labelLog.setText("заполнение таблицы Clients (клиентов)");
         }
     }
-
+    /**
+     * set data into table
+     */
     public void setTableTour() {
         columnTourName.setCellValueFactory(StringCellDataFeatures -> StringCellDataFeatures.getValue().nameProperty());
         columnTureTourOperator.setCellValueFactory(StringCellDataFeatures -> StringCellDataFeatures.getValue().tourOperatorProperty());
@@ -418,7 +469,9 @@ public class ControllerMainWindow {
         });
         labelLog.setText("Ожидание действий пользователя. Приятной работы.");
     }
-
+    /**
+     * fill table
+     */
     private void fillTableTour() {
         try {
             fillTableTour(SQLRequests.selectAllInTable((conn), DbHandler.TABLE_NAME_TOUR));
@@ -426,7 +479,9 @@ public class ControllerMainWindow {
             throwables.printStackTrace();
         }
     }
-
+    /**
+     * fill table
+     */
     private void fillTableTour(ResultSet localResultSet) throws SQLException {
         tableTours.getItems().clear();
         while (localResultSet.next()) {
@@ -463,7 +518,9 @@ public class ControllerMainWindow {
             labelLog.setText("заполнение таблицы Tours (туров)");
         }
     }
-
+    /**
+     * set data into table
+     */
     public void setTableVoucher() {
         columnVoucherTour.setCellValueFactory(StringCellDataFeatures -> StringCellDataFeatures.getValue().tourNameProperty());
         columnVoucherTourDirection.setCellValueFactory(StringCellDataFeatures -> StringCellDataFeatures.getValue().tourDirectionProperty());
@@ -481,7 +538,9 @@ public class ControllerMainWindow {
         });
         labelLog.setText("Ожидание действий пользователя. Приятной работы.");
     }
-
+    /**
+     * fill table
+     */
     private void fillTableVoucher() {
         try {
             fillTableVoucher(SQLRequests.selectAllInTable((conn), DbHandler.TABLE_NAME_VOUCHER));
@@ -489,7 +548,9 @@ public class ControllerMainWindow {
             throwables.printStackTrace();
         }
     }
-
+    /**
+     * fill table
+     */
     private void fillTableVoucher(ResultSet localResultSet) throws SQLException {
         tableVouchers.getItems().clear();
         while (localResultSet.next()) {
@@ -523,7 +584,9 @@ public class ControllerMainWindow {
             labelLog.setText("заполнение таблицы Vouchers (путевок)");
         }
     }
-
+    /**
+     * set data into table
+     */
     public void setTableResults() {
         columnResultNameSurnamePatronymic.setCellValueFactory(StringCellDataFeatures -> StringCellDataFeatures.getValue().nameSurnamePatronymicProperty());
         columnResultVouchers.setCellValueFactory(StringCellDataFeatures -> StringCellDataFeatures.getValue().vouchersCountProperty().asObject());
@@ -536,7 +599,9 @@ public class ControllerMainWindow {
         });
         labelLog.setText("Ожидание действий пользователя. Приятной работы.");
     }
-
+    /**
+     * fill table
+     */
     private void fillTableResults() {
         try {
             fillTableResults(SQLRequests.selectCalculateResult((conn), "20000101", "20000102"));
@@ -544,7 +609,9 @@ public class ControllerMainWindow {
             throwables.printStackTrace();
         }
     }
-
+    /**
+     * fill table
+     */
     private void fillTableResults(ResultSet localResultSet) throws SQLException {
         tableResults.getItems().clear();
         while (localResultSet.next()) {
@@ -561,6 +628,9 @@ public class ControllerMainWindow {
         }
     }
 
+    /**
+     * authorisation method in separated window
+     */
     private void authorisation() {
         try {
             labelLog.setText("Производится авторизация");
@@ -590,6 +660,9 @@ public class ControllerMainWindow {
         }
     }
 
+    /**
+     * in menu button to refresh tables
+     */
     public void onMenuRefreshTables(ActionEvent actionEvent) {
         try {
             fillTableKinds(SQLRequests.selectAllInTable((conn), DbHandler.TABLE_NAME_KIND));
@@ -606,16 +679,23 @@ public class ControllerMainWindow {
             throwables.printStackTrace();
         }
     }
-
+    /**
+     * in menu button to see personal information
+     */
     public void onMenuAccountEnter(ActionEvent actionEvent) {
         employeeAccountEnter(Main.getUser());
     }
-
+    /**
+     * in menu button to exit from account
+     */
     public void onMenuExit(ActionEvent actionEvent) {
         Main.setUser(null);
         authorisation();
     }
 
+    /**
+     * button event to calculate result of work per (Employee)s
+     */
     public void onResultCalculate(ActionEvent actionEvent) {
         try {
             String date1 = datePickerDateStartForResult.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")).replace("-", "");
@@ -627,6 +707,9 @@ public class ControllerMainWindow {
         }
     }
 
+    /**
+     * Click on table to open special window
+     */
     public void onKindClick(MouseEvent mouseEvent) {
         if (mouseEvent.getClickCount() > 1) {
             try {
@@ -655,7 +738,9 @@ public class ControllerMainWindow {
             }
         }
     }
-
+    /**
+     * Click on table to open special window
+     */
     public void onCategoryClick(MouseEvent mouseEvent) {
         if (mouseEvent.getClickCount() > 1) {
             try {
@@ -684,7 +769,9 @@ public class ControllerMainWindow {
             }
         }
     }
-
+    /**
+     * Click on table to open special window
+     */
     public void onDirectionClick(MouseEvent mouseEvent) {
         if (mouseEvent.getClickCount() > 1) {
             try {
@@ -713,7 +800,9 @@ public class ControllerMainWindow {
             }
         }
     }
-
+    /**
+     * Click on table to open special window
+     */
     public void onHotelClick(MouseEvent mouseEvent) {
         if (mouseEvent.getClickCount() > 1) {
             try {
@@ -744,7 +833,9 @@ public class ControllerMainWindow {
     }
 
 
-
+    /**
+     * Click on table to open special window
+     */
     public void onClientClick(MouseEvent mouseEvent) {
         if (mouseEvent.getClickCount() > 1) {
             try {
@@ -773,7 +864,9 @@ public class ControllerMainWindow {
             }
         }
     }
-
+    /**
+     * Click on table to open special window
+     */
     public void onTourOperatorClick(MouseEvent mouseEvent) {
         if (mouseEvent.getClickCount() > 1) {
             try {
@@ -802,13 +895,17 @@ public class ControllerMainWindow {
             }
         }
     }
-
+    /**
+     * Click on table to open special window
+     */
     public void onEmployeeClick(MouseEvent mouseEvent) {
         if (mouseEvent.getClickCount() > 1) {
             employeeAccountEnter(tableEmployee.getSelectionModel().getSelectedItem());
         }
     }
-
+    /**
+     * method to open special window
+     */
     private void employeeAccountEnter(Employee selectedItem){
         try {
             if (selectedItem == null)
@@ -834,7 +931,9 @@ public class ControllerMainWindow {
             MessageWindow.showError("Открытие окна", ex.getMessage());
         }
     }
-
+    /**
+     * Click on table to open special window
+     */
     public void onTourClick(MouseEvent mouseEvent) {
         if (mouseEvent.getClickCount() > 1) {
             try {
@@ -863,7 +962,9 @@ public class ControllerMainWindow {
             }
         }
     }
-
+    /**
+     * Click on table to open special window
+     */
     public void onVoucherClick(MouseEvent mouseEvent) {
         if (mouseEvent.getClickCount() > 1) {
             try {
@@ -895,8 +996,9 @@ public class ControllerMainWindow {
         }
     }
 
-
-
+    /**
+     * method to search in table
+     */
     public void onClientSearch(ActionEvent actionEvent) {
         try {
             Client item = new Client();
@@ -916,7 +1018,9 @@ public class ControllerMainWindow {
             throwables.printStackTrace();
         }
     }
-
+    /**
+     * method to search in table
+     */
     public void onTourSearch(ActionEvent actionEvent) {
         try {
             Tour item = new Tour();
@@ -942,7 +1046,9 @@ public class ControllerMainWindow {
             throwables.printStackTrace();
         }
     }
-
+    /**
+     * method to search in table
+     */
     public void onTourOperatorSearch(ActionEvent actionEvent) {
         try {
             TourOperator item = new TourOperator();
@@ -960,7 +1066,9 @@ public class ControllerMainWindow {
             throwables.printStackTrace();
         }
     }
-
+    /**
+     * method to search in table
+     */
     public void onKindSearch(ActionEvent actionEvent) {
         try {
             Kind item = new Kind();
@@ -976,7 +1084,9 @@ public class ControllerMainWindow {
             throwables.printStackTrace();
         }
     }
-
+    /**
+     * method to search in table
+     */
     public void onCategorySearch(ActionEvent actionEvent) {
         try {
             Category item = new Category();
@@ -992,7 +1102,9 @@ public class ControllerMainWindow {
             throwables.printStackTrace();
         }
     }
-
+    /**
+     * method to search in table
+     */
     public void onDirectionSearch(ActionEvent actionEvent) {
         try {
             Direction item = new Direction();
@@ -1008,7 +1120,9 @@ public class ControllerMainWindow {
             throwables.printStackTrace();
         }
     }
-
+    /**
+     * method to search in table
+     */
     public void onHotelSearch(ActionEvent actionEvent) {
         try {
             Hotel item = new Hotel();
@@ -1026,7 +1140,9 @@ public class ControllerMainWindow {
             throwables.printStackTrace();
         }
     }
-
+    /**
+     * method to search in table
+     */
     public void onVoucherSearch(ActionEvent actionEvent) {
         try {
             Voucher item = new Voucher();
@@ -1049,7 +1165,9 @@ public class ControllerMainWindow {
             throwables.printStackTrace();
         }
     }
-
+    /**
+     * method to search in table
+     */
     public void onEmployeeSearch(ActionEvent actionEvent) {
         try {
             Employee item = new Employee();

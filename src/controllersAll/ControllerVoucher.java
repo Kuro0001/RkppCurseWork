@@ -18,7 +18,11 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
-
+/**
+ * model for table Voucher
+ * @author Kuro
+ * @version 1.0
+ */
 public class ControllerVoucher {
 
     public DatePicker dateDate;
@@ -60,10 +64,15 @@ public class ControllerVoucher {
 
     private ObservableList<Client> tourists = FXCollections.observableArrayList();
     private ObservableList<Client> customers = FXCollections.observableArrayList();
-
+    /**
+     * set work item at start
+     */
     public void setDialogStage(Stage dialogStage, int idTour) {
         setDialogStage(dialogStage, new Voucher(idTour), idTour);
     }
+    /**
+     * set work item at start
+     */
     public void setDialogStage(Stage dialogStage, Voucher workItem, int idTour){
         this.dialogStage = dialogStage;
         dbHandler = new DbHandler();
@@ -84,7 +93,9 @@ public class ControllerVoucher {
         setTableClients();
         setTableTourists();
     }
-
+    /**
+     * set data  from Data base
+     */
     public void setCustomer(int idCustomer){
         try {
             ResultSet set = SQLRequests.selectOneRow((conn), DbHandler.TABLE_NAME_CLIENT, idCustomer);
@@ -107,11 +118,16 @@ public class ControllerVoucher {
             throwables.printStackTrace();
         }
     }
+    /**
+     * set data  from Data base
+     */
     public void setCustomer(Client customer){
         this.customer = customer;
         labelCustomer.setText(customer.getSurname() + " " + customer.getName());
     }
-
+    /**
+     * set data  from Data base
+     */
     public void setEmployee(int idEmployee){
         try {
             ResultSet set = SQLRequests.selectOneRow((conn), DbHandler.TABLE_NAME_EMPLOYEE, idEmployee);
@@ -130,11 +146,16 @@ public class ControllerVoucher {
             throwables.printStackTrace();
         }
     }
+    /**
+     * set data  from Data base
+     */
     public void setEmployee(Employee employee){
         this.employee = employee;
         labelEmployee.setText(this.employee.getSurname() + " " + this.employee.getName());
     }
-
+    /**
+     * set data  from Data base
+     */
     public void setTour(int idTour){
         try {
             ResultSet set = SQLRequests.selectOneRow((conn), DbHandler.TABLE_NAME_TOUR, idTour);
@@ -176,12 +197,17 @@ public class ControllerVoucher {
             throwables.printStackTrace();
         }
     }
+    /**
+     * set data  from Data base
+     */
     public void setTour(Tour tour){
         this.tour = tour;
         labelTourName.setText(this.tour.getName());
     }
 
-
+    /**
+     *  calculate cost for voucher
+     */
     public double calculateFullCost(){
         try{
             ResultSet setTour = SQLRequests.selectOneRow(conn, DbHandler.TABLE_NAME_TOUR , tour.getId());
@@ -201,7 +227,9 @@ public class ControllerVoucher {
         }
         return 0;
     }
-
+    /**
+     * set data into table
+     */
     public void setTableClients() {
         columnClientName.setCellValueFactory(StringCellDataFeatures -> StringCellDataFeatures.getValue().nameProperty());
         columnClientSurname.setCellValueFactory(StringCellDataFeatures -> StringCellDataFeatures.getValue().surnameNumberProperty());
@@ -220,6 +248,9 @@ public class ControllerVoucher {
             }
         });
     }
+    /**
+     * fill table
+     */
     private void fillTableClients() {
         try {
             fillTableClients(SQLRequests.selectAllInTable((conn), DbHandler.TABLE_NAME_CLIENT));
@@ -227,6 +258,9 @@ public class ControllerVoucher {
             throwables.printStackTrace();
         }
     }
+    /**
+     * fill table
+     */
     private void fillTableClients(ResultSet localResultSet) throws SQLException {
         tableClients.getItems().clear();
         while (localResultSet.next()) {
@@ -243,7 +277,9 @@ public class ControllerVoucher {
             customers.add(client);
         }
     }
-
+    /**
+     * set data into table
+     */
     public void setTableTourists() {
         columnTouristName.setCellValueFactory(StringCellDataFeatures -> StringCellDataFeatures.getValue().nameProperty());
         columnTouristSurname.setCellValueFactory(StringCellDataFeatures -> StringCellDataFeatures.getValue().surnameNumberProperty());
@@ -262,6 +298,9 @@ public class ControllerVoucher {
             }
         });
     }
+    /**
+     * fill table
+     */
     private void fillTableTourists() {
         try {
             Client client = new Client();
@@ -272,6 +311,9 @@ public class ControllerVoucher {
             throwables.printStackTrace();
         }
     }
+    /**
+     * fill table
+     */
     private void fillTableTourists(ResultSet localResultSet) throws SQLException {
         tableTourist.getItems().clear();
         while (localResultSet.next()) {
@@ -289,7 +331,9 @@ public class ControllerVoucher {
         }
     }
 
-
+    /**
+     * search records in table
+     */
     public void onTouristSearch(ActionEvent actionEvent) {
         try {
             Client item = new Client();
@@ -308,6 +352,9 @@ public class ControllerVoucher {
             throwables.printStackTrace();
         }
     }
+    /**
+     * search records in table
+     */
     public void onClientSearch(ActionEvent actionEvent) {
         try {
             Client item = new Client();
@@ -327,9 +374,15 @@ public class ControllerVoucher {
         }
     }
 
+    /**
+     * select current client from table as customer in voucher
+     */
     public void onClientMenuAddAsCustomer(ActionEvent actionEvent) {
         setCustomer(tableClients.getSelectionModel().getSelectedItem());
     }
+    /**
+     * select current client from table as tourist in voucher
+     */
     public void onClientMenuAddAsTourist(ActionEvent actionEvent) {
         if (workItem.getId() > 0)
         {
@@ -352,6 +405,9 @@ public class ControllerVoucher {
             MessageWindow.showError("Добавление туриста", "Невозможно добавить туриста, т.к. путевка еще не оформлена");
         }
     }
+    /**
+     * delete current tourist from voucher
+     */
     public void onTouristMenuDelete(ActionEvent actionEvent) {
         if (workItem.getId() > 0)
         {
@@ -370,7 +426,9 @@ public class ControllerVoucher {
             MessageWindow.showError("Удаление туриста", "Невозможно удалить туриста, т.к. путевка еще не оформлена");
         }
     }
-
+    /**
+     * checking input data
+     */
     private boolean validation(String process) {
         if (dateDate.getValue().toString().equals("") || dateDate.getValue() == null) {
             MessageWindow.showError(process, "Не введено значение даты оформления путевки");
@@ -386,7 +444,9 @@ public class ControllerVoucher {
         }
         return true;
     }
-
+    /**
+     * set into work item new data
+     */
     private void setWorkItem() {
         workItem.setDate(dateDate.getValue());
         workItem.setIdClient(customer.getId());
@@ -395,7 +455,9 @@ public class ControllerVoucher {
         workItem.setIdEmployee(employee.getId());
         workItem.setIdClient(customer.getId());
     }
-
+    /**
+     * add new record in data base
+     */
     public void onAdd(ActionEvent actionEvent) {
         if (validation("Добавление")) {
             try {
@@ -409,7 +471,9 @@ public class ControllerVoucher {
             }
         }
     }
-
+    /**
+     * edit record in data base
+     */
     public void onEdit(ActionEvent actionEvent) {
         if (validation("Изменение") && workItem.getId() >0) {
             try {
@@ -423,7 +487,9 @@ public class ControllerVoucher {
             }
         }
     }
-
+    /**
+     * delete record from data base
+     */
     public void onDelete(ActionEvent actionEvent) {
         if (workItem.getId() > 0) {
             try {

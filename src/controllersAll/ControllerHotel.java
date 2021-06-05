@@ -18,7 +18,11 @@ import mains.MessageWindow;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
+/**
+ * model for table Hotel
+ * @author Kuro
+ * @version 1.0
+ */
 public class ControllerHotel {
 
     public TextField textName;
@@ -33,10 +37,15 @@ public class ControllerHotel {
     DbHandler dbHandler;
     private Hotel workItem;
     private ObservableList<Direction> directions = FXCollections.observableArrayList();
-
+    /**
+     * set work item at start
+     */
     public void setDialogStage(Stage dialogStage){
         setDialogStage(dialogStage, new  Hotel("новая запись"));
     }
+    /**
+     * set work item at start
+     */
     public void setDialogStage(Stage dialogStage, Hotel workItem){
         this.dialogStage = dialogStage;
         dbHandler = new DbHandler();
@@ -47,13 +56,18 @@ public class ControllerHotel {
         labelDirection.setText(workItem.getDirection());
         setTableDirections();
     }
-
+    /**
+     * set data into table
+     */
     private void setTableDirections(){
         columnDirectionsName.setCellValueFactory(StringCellDataFeatures -> StringCellDataFeatures.getValue().nameProperty());
         conn = dbHandler.getConnection();
         fillTableDirections();
         tableDirections.setItems(directions);
     }
+    /**
+     * fill table
+     */
     private void fillTableDirections(){
         try {
             fillTableDirections(SQLRequests.selectAllInTable((conn), DbHandler.TABLE_NAME_DIRECTION));
@@ -61,6 +75,9 @@ public class ControllerHotel {
             throwables.printStackTrace();
         }
     }
+    /**
+     * fill table
+     */
     private void fillTableDirections(ResultSet localResultSet) throws SQLException{
         tableDirections.getItems().clear();
         while (localResultSet.next()) {
@@ -70,7 +87,9 @@ public class ControllerHotel {
             directions.add(direction);
         }
     }
-
+    /**
+     * checking input data
+     */
     private boolean validation(String process){
         if (textName.getText().equals("") || textName.getText().length() > 45) {
             MessageWindow.showError(process, "Неверно введено Наименование, либо больше 45 символов");
@@ -86,7 +105,9 @@ public class ControllerHotel {
         }
         return true;
     }
-
+    /**
+     * set into work item new data
+     */
     private void setWorkItem() {
         workItem.setName(textName.getText());
         workItem.setAddress(textAddress.getText());
@@ -96,7 +117,9 @@ public class ControllerHotel {
         }
         labelDirection.setText(workItem.getDirection());
     }
-
+    /**
+     * add new record in data base
+     */
     public void onAdd(ActionEvent actionEvent) {
         if (validation("Добавление")) {
             try {
@@ -111,7 +134,9 @@ public class ControllerHotel {
             }
         }
     }
-
+    /**
+     * edit record in data base
+     */
     public void onEdit(ActionEvent actionEvent) {
         if (validation("Изменение") && workItem.getId() >0) {
             try {
@@ -125,7 +150,9 @@ public class ControllerHotel {
             }
         }
     }
-
+    /**
+     * delete record from data base
+     */
     public void onDelete(ActionEvent actionEvent) {
         if (workItem.getId() > 0) {
             try {
@@ -146,11 +173,16 @@ public class ControllerHotel {
         }
     }
 
+    /**
+     * set work item from table
+     */
     public void onDirectionClick(MouseEvent mouseEvent) {
         if (mouseEvent.getClickCount() > 1)
             setWorkItem();
     }
-
+    /**
+     * search in table
+     */
     public void onSerchDirection(ActionEvent actionEvent) {
         try {
             Direction item = new Direction();

@@ -11,7 +11,11 @@ import mains.Validation;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-
+/**
+ * model for table Category
+ * @author Kuro
+ * @version 1.0
+ */
 public class ControllerCategory {
     public TextField textName;
     public TextField textAddedValue;
@@ -21,12 +25,17 @@ public class ControllerCategory {
     Connection conn;
     DbHandler dbHandler;
     private Category workItem;
-
+    /**
+     * set work item at start
+     */
     public void setDialogStage(Stage dialogStage){
         this.dialogStage = dialogStage;
         dbHandler = new DbHandler();
         conn = dbHandler.getConnection();
     }
+    /**
+     * set work item at start
+     */
     public void setDialogStage(Stage dialogStage, Category workItem){
         this.dialogStage = dialogStage;
         dbHandler = new DbHandler();
@@ -36,7 +45,9 @@ public class ControllerCategory {
         textAddedValue.setText(String.valueOf(workItem.getAddedValue()));
         textDiscount.setText(String.valueOf(workItem.getDiscount()));
     }
-
+    /**
+     * checking input data
+     */
     private boolean validation(String process){
         if (textName.getText().equals("") || textName.getText().length() > 45) {
             MessageWindow.showError(process, "Неверно введено Наименование, либо больше 45 символов");
@@ -52,13 +63,18 @@ public class ControllerCategory {
         }
         return true;
     }
-
+    /**
+     * set into work item new data
+     */
     public void setWorkItem(){
         workItem.setName(textName.getText());
         workItem.setAddedValue(Double.parseDouble(textAddedValue.getText()));
         workItem.setDiscount(Double.parseDouble(textDiscount.getText()));
     }
 
+    /**
+     * add new record in data base
+     */
     public void onAdd(ActionEvent actionEvent) {
         if (validation("Добавление")) {
             try {
@@ -73,7 +89,9 @@ public class ControllerCategory {
             }
         }
     }
-
+    /**
+     * edit record in data base
+     */
     public void onEdit(ActionEvent actionEvent) {
         if (validation("Изменение") && workItem.getId() >0) {
             try {
@@ -87,7 +105,9 @@ public class ControllerCategory {
             }
         }
     }
-
+    /**
+     * delete record from data base
+     */
     public void onDelete(ActionEvent actionEvent) {
         if (workItem.getId() > 0) {
             try {

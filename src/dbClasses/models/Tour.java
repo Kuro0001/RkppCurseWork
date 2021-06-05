@@ -3,7 +3,11 @@ package dbClasses.models;
 import javafx.beans.property.*;
 
 import java.time.LocalDate;
-
+/**
+ * model for table Tour
+ * @author Kuro
+ * @version 1.0
+ */
 public class Tour {
     private IntegerProperty id;
     private StringProperty name;

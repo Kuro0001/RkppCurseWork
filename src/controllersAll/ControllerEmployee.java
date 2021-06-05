@@ -19,7 +19,11 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
-
+/**
+ * model for table Category
+ * @author Kuro
+ * @version 1.0
+ */
 public class ControllerEmployee {
     public TextField textSurname;
     public TextField textName;
@@ -43,10 +47,15 @@ public class ControllerEmployee {
     DbHandler dbHandler;
     private Employee workItem;
     private ObservableList<Voucher> vouchers = FXCollections.observableArrayList();
-
+    /**
+     * set work item at start
+     */
     public void setDialogStage(Stage dialogStage){
         setDialogStage(dialogStage, new Employee("новая запись"));
     }
+    /**
+     * set work item at start
+     */
     public void setDialogStage(Stage dialogStage, Employee workItem){
         this.dialogStage = dialogStage;
         dbHandler = new DbHandler();
@@ -61,6 +70,9 @@ public class ControllerEmployee {
         setTableVoucher();
     }
 
+    /**
+     * set data into table
+     */
     public void setTableVoucher() {
         columnVoucherTour.setCellValueFactory(StringCellDataFeatures -> StringCellDataFeatures.getValue().tourNameProperty());
         columnVoucherTourDirection.setCellValueFactory(StringCellDataFeatures -> StringCellDataFeatures.getValue().tourDirectionProperty());
@@ -77,6 +89,9 @@ public class ControllerEmployee {
             }
         });
     }
+    /**
+     * fill table
+     */
     private void fillTableVoucher(){
         try {
             Voucher voucher = new Voucher();
@@ -90,6 +105,9 @@ public class ControllerEmployee {
             throwables.printStackTrace();
         }
     }
+    /**
+     * fill table
+     */
     private void fillTableVoucher(ResultSet localResultSet) throws SQLException {
         tableVouchers.getItems().clear();
         while (localResultSet.next()) {
@@ -123,6 +141,9 @@ public class ControllerEmployee {
         }
     }
 
+    /**
+     * search in table
+     */
     public void onSearchVoucher(ActionEvent actionEvent) {
         try {
             Voucher voucher = new Voucher();
@@ -148,7 +169,9 @@ public class ControllerEmployee {
             throwables.printStackTrace();
         }
     }
-
+    /**
+     * checking input data
+     */
     private boolean validation(String process){
         if (textSurname.getText().equals("") || textSurname.getText().length() > 45) {
             MessageWindow.showError(process, "Неверно введена Фамилия, либо больше 45 символов");
@@ -168,14 +191,18 @@ public class ControllerEmployee {
         }
         return true;
     }
-
+    /**
+     * set into work item new data
+     */
     private void setWorkItem() {
         workItem.setName(textName.getText());
         workItem.setSurname(textSurname.getText());
         workItem.setPatronymic(textPatronymic.getText());
         workItem.setEmail(textEmail.getText());
     }
-
+    /**
+     * add new record in data base
+     */
     public void onAdd(ActionEvent actionEvent) {
         if (validation("Добавление")) {
             try {
@@ -190,7 +217,9 @@ public class ControllerEmployee {
             }
         }
     }
-
+    /**
+     * edit record in data base
+     */
     public void onEdit(ActionEvent actionEvent) {
         if (validation("Изменение") && workItem.getId() >0) {
             try {
@@ -204,7 +233,9 @@ public class ControllerEmployee {
             }
         }
     }
-
+    /**
+     * delete record from data base
+     */
     public void onDelete(ActionEvent actionEvent) {
         if (workItem.getId() > 0) {
             try {

@@ -10,7 +10,11 @@ import mains.MessageWindow;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-
+/**
+ * model for table Direction
+ * @author Kuro
+ * @version 1.0
+ */
 public class ControllerDirection {
 
     public TextField textName;
@@ -19,12 +23,17 @@ public class ControllerDirection {
     Connection conn;
     DbHandler dbHandler;
     private Direction workItem;
-
+    /**
+     * set work item at start
+     */
     public void setDialogStage(Stage dialogStage){
         this.dialogStage = dialogStage;
         dbHandler = new DbHandler();
         conn = dbHandler.getConnection();
     }
+    /**
+     * set work item at start
+     */
     public void setDialogStage(Stage dialogStage, Direction workItem){
         this.dialogStage = dialogStage;
         dbHandler = new DbHandler();
@@ -32,7 +41,9 @@ public class ControllerDirection {
         this.workItem = workItem;
         textName.setText(workItem.getName());
     }
-
+    /**
+     * checking input data
+     */
     public boolean validation(String process){
         if (textName.getText().equals("") || textName.getText().length() > 45) {
             MessageWindow.showError(process, "Неверно введено Наименование, либо больше 45 символов");
@@ -40,11 +51,15 @@ public class ControllerDirection {
         }
         return true;
     }
-
+    /**
+     * set into work item new data
+     */
     public void setWorkItem(){
         workItem.setName(textName.getText());
     }
-
+    /**
+     * add new record in data base
+     */
     public void onAdd(ActionEvent actionEvent) {
         if (validation("Добавление")) {
             try {
@@ -59,7 +74,9 @@ public class ControllerDirection {
             }
         }
     }
-
+    /**
+     * edit record in data base
+     */
     public void onEdit(ActionEvent actionEvent) {
         if (validation("Изменение") && workItem.getId() >0) {
             try {
@@ -76,7 +93,9 @@ public class ControllerDirection {
             MessageWindow.showError("Изменение", "Неверно введены данные");
         }
     }
-
+    /**
+     * delete record from data base
+     */
     public void onDelete(ActionEvent actionEvent) {
         if (workItem.getId() >0) {
             try {

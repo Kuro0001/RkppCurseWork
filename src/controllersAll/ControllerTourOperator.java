@@ -27,7 +27,11 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
-
+/**
+ * model for table Category
+ * @author Kuro
+ * @version 1.0
+ */
 public class ControllerTourOperator {
 
     public TextField textName;
@@ -58,10 +62,15 @@ public class ControllerTourOperator {
     DbHandler dbHandler;
     private TourOperator workItem;
     private ObservableList<Tour> tours = FXCollections.observableArrayList();
-
+    /**
+     * set work item at start
+     */
     public void setDialogStage(Stage dialogStage){
         setDialogStage(dialogStage, new TourOperator("новая запись"));
     }
+    /**
+     * set work item at start
+     */
     public void setDialogStage(Stage dialogStage, TourOperator workItem) {
         this.dialogStage = dialogStage;
         dbHandler = new DbHandler();
@@ -74,7 +83,9 @@ public class ControllerTourOperator {
         textUniqueNumber.setText(workItem.getUniqueNumber());
         setTableTour();
     }
-
+    /**
+     * set data into table
+     */
     public void setTableTour() {
         columnTourName.setCellValueFactory(StringCellDataFeatures -> StringCellDataFeatures.getValue().nameProperty());
         columnTureTourOperator.setCellValueFactory(StringCellDataFeatures -> StringCellDataFeatures.getValue().tourOperatorProperty());
@@ -96,7 +107,9 @@ public class ControllerTourOperator {
             }
         });
     }
-
+    /**
+     * fill table
+     */
     private void fillTableTour(){
         try {
             Direction direction = new Direction();
@@ -110,6 +123,9 @@ public class ControllerTourOperator {
             throwables.printStackTrace();
         }
     }
+    /**
+     * fill table
+     */
     private void fillTableTour(ResultSet localResultSet) throws SQLException {
         tableTours.getItems().clear();
         while (localResultSet.next()) {
@@ -146,6 +162,9 @@ public class ControllerTourOperator {
         }
     }
 
+    /**
+     * search in table
+     */
     public void onTourSearch(ActionEvent actionEvent) {
         try {
             Direction direction = new Direction();
@@ -171,6 +190,9 @@ public class ControllerTourOperator {
         }
     }
 
+    /**
+     * work with selected item in table
+     */
     public void onTourClick(MouseEvent mouseEvent) {
         if (mouseEvent.getClickCount() > 1)
         {
@@ -198,7 +220,9 @@ public class ControllerTourOperator {
             }
         }
     }
-
+    /**
+     * checking input data
+     */
     private boolean validation(String process){
         if (textName.getText().equals("") || textName.getText().length() > 45) {
             MessageWindow.showError(process, "Неверно введено Имя, либо больше 45 символов");
@@ -218,14 +242,18 @@ public class ControllerTourOperator {
         }
         return true;
     }
-
+    /**
+     * set into work item new data
+     */
     private void setWorkItem() {
         workItem.setName(textName.getText());
         workItem.setPhone(textPhone.getText());
         workItem.setUniqueNumber(textUniqueNumber.getText());
         workItem.setEmail(textEmail.getText());
     }
-
+    /**
+     * add new record in data base
+     */
     public void onAdd(ActionEvent actionEvent) {
         if (validation("Добавление")) {
             try {
@@ -240,7 +268,9 @@ public class ControllerTourOperator {
             }
         }
     }
-
+    /**
+     * edit record in data base
+     */
     public void onEdit(ActionEvent actionEvent) {
         if (validation("Изменение") && workItem.getId() >0) {
             try {
@@ -254,7 +284,9 @@ public class ControllerTourOperator {
             }
         }
     }
-
+    /**
+     * delete record from data base
+     */
     public void onDelete(ActionEvent actionEvent) {
         if (workItem.getId() > 0) {
             try {

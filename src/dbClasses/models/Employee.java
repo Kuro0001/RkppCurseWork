@@ -4,7 +4,11 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-
+/**
+ * model for table Employee
+ * @author Kuro
+ * @version 1.0
+ */
 public class Employee {
     private IntegerProperty id;
     private StringProperty name;

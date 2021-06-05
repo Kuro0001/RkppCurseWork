@@ -1,7 +1,11 @@
 package dbClasses.models;
 
 import javafx.beans.property.*;
-
+/**
+ * model for table Result
+ * @author Kuro
+ * @version 1.0
+ */
 public class Result {
     private IntegerProperty id;
     private StringProperty nameSurnamePatronymic;

@@ -53,10 +53,15 @@ public class ControllerClient {
     DbHandler dbHandler;
     private Client workItem;
     private ObservableList<Voucher> vouchers = FXCollections.observableArrayList();
-
+    /**
+     * set work item at start
+     */
     public void setDialogStage(Stage dialogStage){
         setDialogStage(dialogStage, new Client("новая запись"));
     }
+    /**
+     * set work item at start
+     */
     public void setDialogStage(Stage dialogStage, Client workItem){
         this.dialogStage = dialogStage;
         dbHandler = new DbHandler();
@@ -75,6 +80,9 @@ public class ControllerClient {
         setTableVoucher();
     }
 
+    /**
+     * set data into table
+     */
     public void setTableVoucher() {
         columnVoucherTour.setCellValueFactory(StringCellDataFeatures -> StringCellDataFeatures.getValue().tourNameProperty());
         columnVoucherTourDirection.setCellValueFactory(StringCellDataFeatures -> StringCellDataFeatures.getValue().tourDirectionProperty());
@@ -91,6 +99,10 @@ public class ControllerClient {
             }
         });
     }
+
+    /**
+     * fill table
+     */
     private void fillTableVoucher(){
         try {
             Voucher voucher = new Voucher();
@@ -104,6 +116,9 @@ public class ControllerClient {
             throwables.printStackTrace();
         }
     }
+    /**
+     * fill table
+     */
     private void fillTableVoucher(ResultSet localResultSet) throws SQLException {
         tableVouchers.getItems().clear();
         while (localResultSet.next()) {
@@ -137,6 +152,9 @@ public class ControllerClient {
         }
     }
 
+    /**
+     * show vouchers per selected client
+     */
     public void onShowClientsVouchers(ActionEvent actionEvent) {
         try {
             Voucher voucher = new Voucher();
@@ -162,7 +180,9 @@ public class ControllerClient {
             throwables.printStackTrace();
         }
     }
-
+    /**
+     * show vouchers per selected tourist
+     */
     public void onShowTouristsVouchers(ActionEvent actionEvent) {
         try {
             Voucher voucher = new Voucher();
@@ -196,6 +216,9 @@ public class ControllerClient {
         }
     }
 
+    /**
+     * checking input data
+     */
     private boolean validation(String process){
         if (textSurname.getText().equals("") || textSurname.getText().length() > 45) {
             MessageWindow.showError(process, "Неверно введена Фамилия, либо больше 45 символов");
@@ -232,7 +255,9 @@ public class ControllerClient {
         }
         return true;
     }
-
+    /**
+     * set into work item new data
+     */
     private void setWorkItem() {
         workItem.setName(textName.getText());
         workItem.setSurname(textSurname.getText());
@@ -243,7 +268,9 @@ public class ControllerClient {
         workItem.setPhone(textPhone.getText());
         workItem.setEmail(textEmail.getText());
     }
-
+    /**
+     * add new record in data base
+     */
     public void onAdd(ActionEvent actionEvent) {
         if (validation("Добавление")) {
             try {
@@ -258,7 +285,9 @@ public class ControllerClient {
             }
         }
     }
-
+    /**
+     * edit record in data base
+     */
     public void onEdit(ActionEvent actionEvent) {
         if (validation("Изменение") && workItem.getId() >0) {
             try {
@@ -272,7 +301,9 @@ public class ControllerClient {
             }
         }
     }
-
+    /**
+     * delete record from data base
+     */
     public void onDelete(ActionEvent actionEvent) {
         if (workItem.getId() > 0) {
             try {

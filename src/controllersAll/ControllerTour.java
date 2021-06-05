@@ -24,7 +24,11 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
-
+/**
+ * model for table Tour
+ * @author Kuro
+ * @version 1.0
+ */
 public class ControllerTour {
 
     public TextField textName;
@@ -85,11 +89,15 @@ public class ControllerTour {
     private ObservableList<TourOperator> tourOperators = FXCollections.observableArrayList();
     private ObservableList<Voucher> vouchers = FXCollections.observableArrayList();
 
-
+    /**
+     * set work item at start
+     */
     public void setDialogStage(Stage dialogStage) {
         setDialogStage(dialogStage, new Tour("новая запись"));
     }
-
+    /**
+     * set work item at start
+     */
     public void setDialogStage(Stage dialogStage, Tour workItem) {
         this.dialogStage = dialogStage;
         dbHandler = new DbHandler();
@@ -117,6 +125,9 @@ public class ControllerTour {
         setTableVoucher();
     }
 
+    /**
+     * method to refresh Tour after edit/add/delete vouchers
+     */
     public void refreshTour(){
         try {
             ResultSet set = SQLRequests.selectOneRow((conn), DbHandler.TABLE_NAME_TOUR, workItem.getId());
@@ -172,7 +183,9 @@ public class ControllerTour {
             throwables.printStackTrace();
         }
     }
-
+    /**
+     * set work item at start
+     */
     public void setTableKind() {
         columnKindName.setCellValueFactory(StringCellDataFeatures -> StringCellDataFeatures.getValue().nameProperty());
         dbHandler = new DbHandler();
@@ -185,7 +198,9 @@ public class ControllerTour {
             }
         });
     }
-
+    /**
+     * set data into table
+     */
     private void fillTableKinds() {
         try {
             fillTableKinds(SQLRequests.selectAllInTable((conn), DbHandler.TABLE_NAME_KIND));
@@ -193,7 +208,9 @@ public class ControllerTour {
             throwables.printStackTrace();
         }
     }
-
+    /**
+     * fill table
+     */
     private void fillTableKinds(ResultSet localResultSet) throws SQLException {
         tableKinds.getItems().clear();
         while (localResultSet.next()) {
@@ -203,7 +220,9 @@ public class ControllerTour {
             kinds.add(kind);
         }
     }
-
+    /**
+     * set data into table
+     */
     public void setTableCategories() {
         columnCategoryName.setCellValueFactory(StringCellDataFeatures -> StringCellDataFeatures.getValue().nameProperty());
         columnCategoryAddedValue.setCellValueFactory(StringCellDataFeatures -> StringCellDataFeatures.getValue().addedValueProperty().asObject());
@@ -217,7 +236,9 @@ public class ControllerTour {
             }
         });
     }
-
+    /**
+     * fill table
+     */
     private void fillTableCategories() {
         try {
             fillTableCategories(SQLRequests.selectAllInTable((conn), DbHandler.TABLE_NAME_CATEGORY));
@@ -225,7 +246,9 @@ public class ControllerTour {
             throwables.printStackTrace();
         }
     }
-
+    /**
+     * fill table
+     */
     private void fillTableCategories(ResultSet localResultSet) throws SQLException {
         tableCategories.getItems().clear();
         while (localResultSet.next()) {
@@ -237,7 +260,9 @@ public class ControllerTour {
             categories.add(category);
         }
     }
-
+    /**
+     * set data into table
+     */
     public void setTableHotels() {
         columnHotelName.setCellValueFactory(StringCellDataFeatures -> StringCellDataFeatures.getValue().nameProperty());
         columnHotelAddress.setCellValueFactory(StringCellDataFeatures -> StringCellDataFeatures.getValue().addressProperty());
@@ -251,7 +276,9 @@ public class ControllerTour {
             }
         });
     }
-
+    /**
+     * fill table
+     */
     private void fillTableHotels() {
         try {
             fillTableHotels(SQLRequests.selectAllInTable((conn), DbHandler.TABLE_NAME_HOTELS));
@@ -259,7 +286,9 @@ public class ControllerTour {
             throwables.printStackTrace();
         }
     }
-
+    /**
+     * fill table
+     */
     private void fillTableHotels(ResultSet localResultSet) throws SQLException {
         tableHotels.getItems().clear();
         while (localResultSet.next()) {
@@ -275,7 +304,9 @@ public class ControllerTour {
             hotels.add(hotel);
         }
     }
-
+    /**
+     * set data into table
+     */
     public void setTableTourOperators() {
         columnTourOperatorName.setCellValueFactory(StringCellDataFeatures -> StringCellDataFeatures.getValue().nameProperty());
         columnTourOperatorNumber.setCellValueFactory(StringCellDataFeatures -> StringCellDataFeatures.getValue().uniqueNumberProperty());
@@ -290,7 +321,9 @@ public class ControllerTour {
             }
         });
     }
-
+    /**
+     * fill table
+     */
     private void fillTableTourOperators() {
         try {
             fillTableTourOperators(SQLRequests.selectAllInTable((conn), DbHandler.TABLE_NAME_TOUR_OPERATOR));
@@ -298,7 +331,9 @@ public class ControllerTour {
             throwables.printStackTrace();
         }
     }
-
+    /**
+     * fill table
+     */
     private void fillTableTourOperators(ResultSet localResultSet) throws SQLException {
         tableTourOperators.getItems().clear();
         while (localResultSet.next()) {
@@ -311,7 +346,9 @@ public class ControllerTour {
             tourOperators.add(tourOperator);
         }
     }
-
+    /**
+     * set data into table
+     */
     public void setTableVoucher() {
         columnVoucherTour.setCellValueFactory(StringCellDataFeatures -> StringCellDataFeatures.getValue().tourNameProperty());
         columnVoucherTourDirection.setCellValueFactory(StringCellDataFeatures -> StringCellDataFeatures.getValue().tourDirectionProperty());
@@ -328,7 +365,9 @@ public class ControllerTour {
             }
         });
     }
-
+    /**
+     * fill table
+     */
     private void fillTableVoucher() {
         try {
             Voucher voucher = new Voucher();
@@ -339,7 +378,9 @@ public class ControllerTour {
             throwables.printStackTrace();
         }
     }
-
+    /**
+     * fill table
+     */
     private void fillTableVoucher(ResultSet localResultSet) throws SQLException {
         tableVouchers.getItems().clear();
         while (localResultSet.next()) {
@@ -373,7 +414,9 @@ public class ControllerTour {
         }
     }
 
-
+    /**
+     * search in Table
+     */
     public void onTourOperatorSearch(ActionEvent actionEvent) {
         try {
             TourOperator item = new TourOperator();
@@ -391,7 +434,9 @@ public class ControllerTour {
             throwables.printStackTrace();
         }
     }
-
+    /**
+     * search in Table
+     */
     public void onHotelSearch(ActionEvent actionEvent) {
         try {
             Hotel item = new Hotel();
@@ -408,7 +453,9 @@ public class ControllerTour {
             throwables.printStackTrace();
         }
     }
-
+    /**
+     * search in Table
+     */
     public void onKindSearch(ActionEvent actionEvent) {
         try {
             Kind item = new Kind();
@@ -423,7 +470,9 @@ public class ControllerTour {
             throwables.printStackTrace();
         }
     }
-
+    /**
+     * search in Table
+     */
     public void onCategorySearch(ActionEvent actionEvent) {
         try {
             Category item = new Category();
@@ -438,7 +487,9 @@ public class ControllerTour {
             throwables.printStackTrace();
         }
     }
-
+    /**
+     * search in Table
+     */
     public void onVoucherSearch(ActionEvent actionEvent) {
         try {
             Voucher voucher = new Voucher();
@@ -450,7 +501,9 @@ public class ControllerTour {
         }
     }
 
-
+    /**
+     * select item in table
+     */
     public void onHotelClick(MouseEvent mouseEvent) {
         if (mouseEvent.getClickCount() > 1) {
             hotel = tableHotels.getSelectionModel().getSelectedItem();
@@ -458,21 +511,27 @@ public class ControllerTour {
             labelDirection.setText(hotel.getDirection());
         }
     }
-
+    /**
+     * select item in table
+     */
     public void onKindClick(MouseEvent mouseEvent) {
         if (mouseEvent.getClickCount() > 1) {
             kind = tableKinds.getSelectionModel().getSelectedItem();
             labelKind.setText(kind.getName());
         }
     }
-
+    /**
+     * select item in table
+     */
     public void onCategoryClick(MouseEvent mouseEvent) {
         if (mouseEvent.getClickCount() > 1) {
             category = tableCategories.getSelectionModel().getSelectedItem();
             labelCategory.setText(category.getName());
         }
     }
-
+    /**
+     * select item in table
+     */
     public void onTourOperatorClick(MouseEvent mouseEvent) {
         if (mouseEvent.getClickCount() > 1) {
             tourOperator = tableTourOperators.getSelectionModel().getSelectedItem();
@@ -480,6 +539,9 @@ public class ControllerTour {
         }
     }
 
+    /**
+     * make new Voucher for current Tour
+     */
     public void onAddVoucher(ActionEvent actionEvent) {
         if (workItem.getId() > 0 && workItem.getOffersCount() > workItem.getVouchersCount()) {
             try {
@@ -507,7 +569,9 @@ public class ControllerTour {
             MessageWindow.showError("Оформление новой путевки", "Невозможно оформление новой путевки по этому туру.");
         }
     }
-
+    /**
+     * work with selected Voucher
+     */
     public void onVoucherClick(MouseEvent mouseEvent) {
         if (mouseEvent.getClickCount() > 1) {
                 try {
@@ -538,7 +602,9 @@ public class ControllerTour {
         }
     }
 
-
+    /**
+     * checking input data
+     */
     private boolean validation(String process) {
         if (textName.getText().equals("") || textName.getText().length() > 45) {
             MessageWindow.showError(process, "Неверно введено Наименование, либо больше 45 символов");
@@ -586,7 +652,9 @@ public class ControllerTour {
         }
         return true;
     }
-
+    /**
+     * set into work item new data
+     */
     private void setWorkItem() {
         workItem.setName(textName.getText());
         workItem.setOffersCount(Integer.parseInt(textOffersCount.getText()));
@@ -616,6 +684,9 @@ public class ControllerTour {
             workItem.setVouchersCount(calculateVouchersCount());
     }
 
+    /**
+     * calculate count of Tourists per Voucher in current Tour
+     */
     public int calculateVouchersCount() {
         try {
             ResultSet set = SQLRequests.selectCalculateVouchersCount((conn), workItem.getId());
@@ -629,7 +700,9 @@ public class ControllerTour {
         }
         return 0;
     }
-
+    /**
+     * add new record in data base
+     */
     public void onAdd(ActionEvent actionEvent) {
         if (validation("Добавление")) {
             try {
@@ -644,7 +717,9 @@ public class ControllerTour {
             }
         }
     }
-
+    /**
+     * edit record in data base
+     */
     public void onEdit(ActionEvent actionEvent) {
         if (validation("Изменение") && workItem.getId() >0) {
             try {
@@ -658,7 +733,9 @@ public class ControllerTour {
             }
         }
     }
-
+    /**
+     * delete record from data base
+     */
     public void onDelete(ActionEvent actionEvent) {
         if (workItem.getId() > 0) {
             try {

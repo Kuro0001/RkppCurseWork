@@ -1,7 +1,11 @@
 package dbClasses.models;
 
 import javafx.beans.property.*;
-
+/**
+ * model for table Hotel
+ * @author Kuro
+ * @version 1.0
+ */
 public class Hotel {
     private IntegerProperty id;
     private StringProperty name;
